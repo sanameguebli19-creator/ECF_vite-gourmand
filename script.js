@@ -201,9 +201,126 @@ function initAuth() {
   };
 }
 
+/* ── VUE DÉTAILLÉE MENU (menu-detail.html) ── */
+function initMenuDetail() {
+  if (!document.getElementById('plat-entree')) return;
+
+  window.switchPlat = function(type, btn) {
+    document.querySelectorAll('.plats-list').forEach(l => l.classList.remove('active'));
+    document.querySelectorAll('.plat-tab').forEach(b => b.classList.remove('active'));
+    document.getElementById('plat-' + type).classList.add('active');
+    btn.classList.add('active');
+  };
+}
+
+/* ── COMMANDE (commande.html) ── */
+function initCommande() {
+  if (!document.getElementById('menu-select')) return;
+
+  const menus = {
+    noel:     { nom: 'Le Grand Festin de Noël',        theme: 'Thème Noël',      prix: 65, min: 8  },
+    paques:   { nom: 'Table de Pâques Printanière',    theme: 'Thème Pâques',    prix: 48, min: 6  },
+    classique:{ nom: 'Menu Classique Bordeaux',         theme: 'Classique',       prix: 38, min: 4  },
+    vegan:    { nom: 'Menu Vegan Saveurs du Monde',     theme: 'Classique • Vegan', prix: 35, min: 4 },
+    event:    { nom: 'Cocktail Dinatoire Prestige',     theme: 'Événement',       prix: 75, min: 20 }
+  };
+
+  window.changeQty = function(delta) {
+    const input = document.getElementById('qty');
+    const select = document.getElementById('menu-select');
+    const menuKey = select.value;
+    const minVal = menus[menuKey]?.min || 1;
+    let val = parseInt(input.value) + delta;
+    if (val < minVal) val = minVal;
+    input.value = val;
+    updateRecap();
+  };
+
+  window.updateRecap = function() {
+    const select   = document.getElementById('menu-select');
+    const menuKey  = select.value;
+    const menu     = menus[menuKey];
+    if (!menu) return;
+
+    const qty      = parseInt(document.getElementById('qty').value) || menu.min;
+    const minQty   = menu.min;
+
+    // Forcer le minimum
+    if (qty < minQty) {
+      document.getElementById('qty').value = minQty;
+    }
+
+    const realQty  = Math.max(qty, minQty);
+    const subtotal = menu.prix * realQty;
+
+    // Réduction groupe : -10% si 5 personnes de plus que le minimum
+    const reduction = realQty >= (minQty + 5) ? Math.round(subtotal * 0.1) : 0;
+    const total     = subtotal - reduction;
+
+    // Mise à jour récap
+    document.getElementById('recap-nom').textContent       = menu.nom;
+    document.getElementById('recap-theme').textContent     = menu.theme;
+    document.getElementById('recap-prix-unit').textContent = menu.prix + '€ / pers.';
+    document.getElementById('recap-qty').textContent       = realQty;
+    document.getElementById('recap-subtotal').textContent  = subtotal + '€';
+    document.getElementById('recap-total').textContent     = total + '€';
+    document.getElementById('qty-note').textContent        = 'Minimum ' + minQty + ' personnes pour ce menu';
+
+    const rowReduction = document.getElementById('row-reduction');
+    const reductionMsg = document.getElementById('recap-reduction-msg');
+    if (reduction > 0) {
+      document.getElementById('recap-reduction').textContent = '−' + reduction + '€';
+      rowReduction.style.display  = 'flex';
+      reductionMsg.style.display  = 'block';
+    } else {
+      rowReduction.style.display  = 'none';
+      reductionMsg.style.display  = 'none';
+    }
+  };
+
+  window.validerCommande = function() {
+    const date    = document.getElementById('date-prestation').value;
+    const heure   = document.getElementById('heure-livraison').value;
+    const adresse = document.getElementById('adresse').value.trim();
+    if (!date || !heure || !adresse) {
+      alert('Veuillez remplir tous les champs obligatoires (date, heure et adresse).');
+      return;
+    }
+    // TODO : appel API PHP
+    alert('✅ Commande validée ! Un email de confirmation vous a été envoyé.');
+  };
+
+  // Init au chargement
+  updateRecap();
+}
+
+/* ── CONTACT (contact.html) ── */
+function initContact() {
+  if (!document.getElementById('contact-titre')) return;
+
+  window.envoyerContact = function() {
+    const titre   = document.getElementById('contact-titre').value.trim();
+    const email   = document.getElementById('contact-email').value.trim();
+    const message = document.getElementById('contact-message').value.trim();
+
+    if (!titre || !email || !message) {
+      alert('Veuillez remplir tous les champs.');
+      return;
+    }
+    // TODO : appel API PHP (envoi mail)
+    document.getElementById('successMsg').classList.add('show');
+    document.getElementById('contact-titre').value   = '';
+    document.getElementById('contact-email').value   = '';
+    document.getElementById('contact-message').value = '';
+  };
+}
+
 /* ── INITIALISATION ── */
 document.addEventListener('DOMContentLoaded', () => {
   initScrollReveal();
   initFiltres();
   initAuth();
+  initMenuDetail();
+  initCommande();
+  initContact();
 });
