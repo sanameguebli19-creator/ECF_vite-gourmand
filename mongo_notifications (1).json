@@ -1,0 +1,57 @@
+[
+  {
+    "id_utilisateur": 3,
+    "id_commande": 1,
+    "type": "confirmation_commande",
+    "titre": "Commande confirmée !",
+    "message": "Votre commande 'Le Grand Festin de Noël' pour le 24 déc. a bien été reçue.",
+    "canal": "email",
+    "envoye": true,
+    "lu": true,
+    "timestamp": { "$date": "2025-12-20T10:15:00Z" }
+  },
+  {
+    "id_utilisateur": 3,
+    "id_commande": 1,
+    "type": "statut_commande",
+    "titre": "Votre commande est acceptée !",
+    "message": "Notre équipe a accepté votre commande. Préparation en cours.",
+    "canal": "email",
+    "envoye": true,
+    "lu": true,
+    "timestamp": { "$date": "2025-12-20T14:30:00Z" }
+  },
+  {
+    "id_utilisateur": 3,
+    "id_commande": 1,
+    "type": "statut_commande",
+    "titre": "Votre commande est en livraison !",
+    "message": "Votre menu du 24 déc. est en route. Livraison prévue avant 12h.",
+    "canal": "email",
+    "envoye": true,
+    "lu": false,
+    "timestamp": { "$date": "2025-12-24T11:45:00Z" }
+  },
+  {
+    "id_utilisateur": 3,
+    "id_commande": 1,
+    "type": "demande_avis",
+    "titre": "Comment s'est passé votre réveillon ?",
+    "message": "Laissez-nous votre avis sur 'Le Grand Festin de Noël' !",
+    "canal": "email",
+    "envoye": true,
+    "lu": false,
+    "timestamp": { "$date": "2025-12-26T09:00:00Z" }
+  },
+  {
+    "id_utilisateur": 3,
+    "id_commande": 2,
+    "type": "confirmation_commande",
+    "titre": "Commande confirmée !",
+    "message": "Votre commande 'Table de Pâques Printanière' pour le 20 avr. a bien été reçue.",
+    "canal": "email",
+    "envoye": true,
+    "lu": true,
+    "timestamp": { "$date": "2025-04-13T09:20:00Z" }
+  }
+]

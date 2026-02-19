@@ -1,0 +1,79 @@
+[
+  {
+    "annee": 2025,
+    "mois": 12,
+    "mois_nom": "Décembre",
+    "ca_total": 12450.00,
+    "nb_commandes": 28,
+    "nb_clients": 24,
+    "details_par_menu": [
+      { "id_menu": 1, "nom": "Le Grand Festin de Noël",     "theme": "noel",      "ca": 5460.00, "nb_commandes": 7  },
+      { "id_menu": 5, "nom": "Cocktail Dinatoire Prestige", "theme": "evenement", "ca": 3750.00, "nb_commandes": 5  },
+      { "id_menu": 2, "nom": "Table de Pâques Printanière", "theme": "paques",    "ca": 1920.00, "nb_commandes": 5  },
+      { "id_menu": 3, "nom": "Menu Classique Bordeaux",     "theme": "classique", "ca": 1320.00, "nb_commandes": 11 }
+    ],
+    "details_par_semaine": [
+      { "semaine": 1, "ca": 1200.00 },
+      { "semaine": 2, "ca": 2800.00 },
+      { "semaine": 3, "ca": 4200.00 },
+      { "semaine": 4, "ca": 4250.00 }
+    ]
+  },
+  {
+    "annee": 2025,
+    "mois": 11,
+    "mois_nom": "Novembre",
+    "ca_total": 7840.00,
+    "nb_commandes": 18,
+    "nb_clients": 16,
+    "details_par_menu": [
+      { "id_menu": 3, "nom": "Menu Classique Bordeaux",     "theme": "classique", "ca": 3420.00, "nb_commandes": 9 },
+      { "id_menu": 5, "nom": "Cocktail Dinatoire Prestige", "theme": "evenement", "ca": 2250.00, "nb_commandes": 3 },
+      { "id_menu": 4, "nom": "Menu Vegan Saveurs du Monde", "theme": "classique", "ca": 2170.00, "nb_commandes": 6 }
+    ],
+    "details_par_semaine": [
+      { "semaine": 1, "ca": 1400.00 },
+      { "semaine": 2, "ca": 2100.00 },
+      { "semaine": 3, "ca": 2340.00 },
+      { "semaine": 4, "ca": 2000.00 }
+    ]
+  },
+  {
+    "annee": 2025,
+    "mois": 10,
+    "mois_nom": "Octobre",
+    "ca_total": 5320.00,
+    "nb_commandes": 14,
+    "nb_clients": 12,
+    "details_par_menu": [
+      { "id_menu": 3, "nom": "Menu Classique Bordeaux",     "theme": "classique", "ca": 2280.00, "nb_commandes": 6 },
+      { "id_menu": 4, "nom": "Menu Vegan Saveurs du Monde", "theme": "classique", "ca": 1750.00, "nb_commandes": 5 },
+      { "id_menu": 2, "nom": "Table de Pâques Printanière", "theme": "paques",    "ca": 1290.00, "nb_commandes": 3 }
+    ],
+    "details_par_semaine": [
+      { "semaine": 1, "ca": 980.00  },
+      { "semaine": 2, "ca": 1420.00 },
+      { "semaine": 3, "ca": 1680.00 },
+      { "semaine": 4, "ca": 1240.00 }
+    ]
+  },
+  {
+    "annee": 2025,
+    "mois": 4,
+    "mois_nom": "Avril",
+    "ca_total": 9360.00,
+    "nb_commandes": 22,
+    "nb_clients": 20,
+    "details_par_menu": [
+      { "id_menu": 2, "nom": "Table de Pâques Printanière", "theme": "paques",    "ca": 5760.00, "nb_commandes": 12 },
+      { "id_menu": 6, "nom": "Pâques Végétarienne",         "theme": "paques",    "ca": 2520.00, "nb_commandes": 6  },
+      { "id_menu": 3, "nom": "Menu Classique Bordeaux",     "theme": "classique", "ca": 1080.00, "nb_commandes": 4  }
+    ],
+    "details_par_semaine": [
+      { "semaine": 1, "ca": 960.00  },
+      { "semaine": 2, "ca": 2880.00 },
+      { "semaine": 3, "ca": 3600.00 },
+      { "semaine": 4, "ca": 1920.00 }
+    ]
+  }
+]

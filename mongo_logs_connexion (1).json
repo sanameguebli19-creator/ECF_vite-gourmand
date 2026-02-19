@@ -1,0 +1,56 @@
+[
+  {
+    "id_utilisateur": 3,
+    "email": "julie@exemple.fr",
+    "role": "client",
+    "action": "connexion_reussie",
+    "ip": "192.168.1.10",
+    "user_agent": "Mozilla/5.0 Chrome/120",
+    "timestamp": { "$date": "2026-01-15T09:23:11Z" }
+  },
+  {
+    "id_utilisateur": 2,
+    "email": "jose@vitegourmand.fr",
+    "role": "employe",
+    "action": "connexion_reussie",
+    "ip": "192.168.1.5",
+    "user_agent": "Mozilla/5.0 Firefox/121",
+    "timestamp": { "$date": "2026-01-15T08:45:00Z" }
+  },
+  {
+    "id_utilisateur": 1,
+    "email": "admin@vitegourmand.fr",
+    "role": "admin",
+    "action": "connexion_reussie",
+    "ip": "192.168.1.1",
+    "user_agent": "Mozilla/5.0 Chrome/121",
+    "timestamp": { "$date": "2026-01-15T07:30:00Z" }
+  },
+  {
+    "id_utilisateur": null,
+    "email": "inconnu@pirate.fr",
+    "role": null,
+    "action": "connexion_echouee",
+    "ip": "85.24.100.200",
+    "user_agent": "curl/7.88",
+    "timestamp": { "$date": "2026-01-15T03:12:44Z" }
+  },
+  {
+    "id_utilisateur": null,
+    "email": "test@hack.ru",
+    "role": null,
+    "action": "connexion_echouee",
+    "ip": "85.24.100.200",
+    "user_agent": "curl/7.88",
+    "timestamp": { "$date": "2026-01-15T03:13:10Z" }
+  },
+  {
+    "id_utilisateur": 3,
+    "email": "julie@exemple.fr",
+    "role": "client",
+    "action": "deconnexion",
+    "ip": "192.168.1.10",
+    "user_agent": "Mozilla/5.0 Chrome/120",
+    "timestamp": { "$date": "2026-01-15T11:45:00Z" }
+  }
+]

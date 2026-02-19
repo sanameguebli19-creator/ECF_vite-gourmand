@@ -1,0 +1,110 @@
+[
+  {
+    "id_menu": 1,
+    "nom": "Le Grand Festin de Noël",
+    "theme": "noel",
+    "stats_globales": {
+      "total_vues": 1240,
+      "total_commandes": 84,
+      "taux_conversion": 6.77,
+      "note_moyenne": 4.8,
+      "nb_avis": 52
+    },
+    "stats_par_mois": [
+      { "mois": "2025-10", "vues": 80,  "commandes": 3  },
+      { "mois": "2025-11", "vues": 320, "commandes": 18 },
+      { "mois": "2025-12", "vues": 840, "commandes": 63 }
+    ],
+    "tags": ["noel", "festif", "classique", "foie-gras", "dinde"]
+  },
+  {
+    "id_menu": 2,
+    "nom": "Table de Pâques Printanière",
+    "theme": "paques",
+    "stats_globales": {
+      "total_vues": 680,
+      "total_commandes": 40,
+      "taux_conversion": 5.88,
+      "note_moyenne": 4.6,
+      "nb_avis": 28
+    },
+    "stats_par_mois": [
+      { "mois": "2025-03", "vues": 120, "commandes": 8  },
+      { "mois": "2025-04", "vues": 480, "commandes": 28 },
+      { "mois": "2025-05", "vues": 80,  "commandes": 4  }
+    ],
+    "tags": ["paques", "agneau", "printanier", "classique"]
+  },
+  {
+    "id_menu": 3,
+    "nom": "Menu Classique Bordeaux",
+    "theme": "classique",
+    "stats_globales": {
+      "total_vues": 950,
+      "total_commandes": 35,
+      "taux_conversion": 3.68,
+      "note_moyenne": 4.5,
+      "nb_avis": 22
+    },
+    "stats_par_mois": [
+      { "mois": "2025-10", "vues": 280, "commandes": 10 },
+      { "mois": "2025-11", "vues": 380, "commandes": 15 },
+      { "mois": "2025-12", "vues": 290, "commandes": 10 }
+    ],
+    "tags": ["classique", "bordeaux", "gastronomie", "local"]
+  },
+  {
+    "id_menu": 4,
+    "nom": "Menu Vegan Saveurs du Monde",
+    "theme": "classique",
+    "stats_globales": {
+      "total_vues": 890,
+      "total_commandes": 20,
+      "taux_conversion": 2.25,
+      "note_moyenne": 4.9,
+      "nb_avis": 14
+    },
+    "stats_par_mois": [
+      { "mois": "2025-10", "vues": 210, "commandes": 5 },
+      { "mois": "2025-11", "vues": 380, "commandes": 9 },
+      { "mois": "2025-12", "vues": 300, "commandes": 6 }
+    ],
+    "tags": ["vegan", "monde", "epices", "sain", "vegetalien"]
+  },
+  {
+    "id_menu": 5,
+    "nom": "Cocktail Dinatoire Prestige",
+    "theme": "evenement",
+    "stats_globales": {
+      "total_vues": 520,
+      "total_commandes": 50,
+      "taux_conversion": 9.61,
+      "note_moyenne": 4.7,
+      "nb_avis": 38
+    },
+    "stats_par_mois": [
+      { "mois": "2025-10", "vues": 120, "commandes": 12 },
+      { "mois": "2025-11", "vues": 200, "commandes": 18 },
+      { "mois": "2025-12", "vues": 200, "commandes": 20 }
+    ],
+    "tags": ["evenement", "cocktail", "prestige", "professionnel"]
+  },
+  {
+    "id_menu": 6,
+    "nom": "Pâques Végétarienne",
+    "theme": "paques",
+    "stats_globales": {
+      "total_vues": 340,
+      "total_commandes": 18,
+      "taux_conversion": 5.29,
+      "note_moyenne": 4.4,
+      "nb_avis": 10
+    },
+    "stats_par_mois": [
+      { "mois": "2025-03", "vues": 80,  "commandes": 4 },
+      { "mois": "2025-04", "vues": 220, "commandes": 12 },
+      { "mois": "2025-05", "vues": 40,  "commandes": 2 }
+    ],
+    "tags": ["paques", "vegetarien", "fromage", "legumes"]
+  }
+]

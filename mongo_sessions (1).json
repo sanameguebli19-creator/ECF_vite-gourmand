@@ -1,0 +1,26 @@
+[
+  {
+    "session_token": "tok_julie_abc123xyz789",
+    "id_utilisateur": 3,
+    "role": "client",
+    "ip": "192.168.1.10",
+    "created_at": { "$date": "2026-02-19T09:00:00Z" },
+    "expire_at":  { "$date": "2026-02-19T10:00:00Z" }
+  },
+  {
+    "session_token": "tok_jose_def456uvw012",
+    "id_utilisateur": 2,
+    "role": "employe",
+    "ip": "192.168.1.5",
+    "created_at": { "$date": "2026-02-19T08:30:00Z" },
+    "expire_at":  { "$date": "2026-02-19T09:30:00Z" }
+  },
+  {
+    "session_token": "tok_admin_ghi789rst345",
+    "id_utilisateur": 1,
+    "role": "admin",
+    "ip": "192.168.1.1",
+    "created_at": { "$date": "2026-02-19T07:00:00Z" },
+    "expire_at":  { "$date": "2026-02-19T08:00:00Z" }
+  }
+]
