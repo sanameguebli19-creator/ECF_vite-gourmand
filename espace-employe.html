@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Espace Employé – Vite & Gourmand</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .dashboard-layout { display: grid; grid-template-columns: 260px 1fr; min-height: calc(100vh - 72px); }
+
+    /* SIDEBAR */
+    .dash-sidebar { background: var(--dark); padding: 2rem 0; position: sticky; top: 0; height: calc(100vh - 72px); overflow-y: auto; }
+    .dash-user { padding: 0 1.5rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.07); margin-bottom: 1rem; }
+    .dash-avatar { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, #3a5a2e, #7ab648); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: .8rem; }
+    .dash-username { font-weight: 600; color: #fff; font-size: .95rem; }
+    .dash-role { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: #7ab648; margin-top: .2rem; }
+    .dash-nav { list-style: none; }
+    .dash-nav li a { display: flex; align-items: center; gap: .75rem; padding: .75rem 1.5rem; color: rgba(255,255,255,0.5); text-decoration: none; font-size: .88rem; font-weight: 500; transition: all .2s; }
+    .dash-nav li a:hover { color: #fff; background: rgba(255,255,255,0.05); }
+    .dash-nav li a.active { color: #fff; background: rgba(122,182,72,0.15); border-right: 3px solid #7ab648; }
+    .dash-nav li a .nav-icon { font-size: 1.1rem; width: 20px; text-align: center; }
+    .dash-nav-title { font-size: .65rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,0.25); padding: 1rem 1.5rem .3rem; }
+    .dash-nav .badge { margin-left: auto; background: var(--terracotta); color: #fff; font-size: .65rem; font-weight: 700; padding: .1rem .45rem; border-radius: 50px; }
+    .dash-logout { padding: 1.5rem; border-top: 1px solid rgba(255,255,255,0.07); margin-top: 1rem; }
+    .btn-logout { display: flex; align-items: center; gap: .6rem; color: rgba(255,255,255,0.4); font-size: .85rem; text-decoration: none; transition: color .2s; background: none; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+    .btn-logout:hover { color: #fff; }
+
+    /* MAIN */
+    .dash-main { background: var(--cream); padding: 2.5rem; overflow-y: auto; }
+    .dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
+    .dash-header h1 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--dark); }
+    .dash-header h1 em { color: #3a5a2e; font-style: italic; }
+    .dash-section { display: none; }
+    .dash-section.active { display: block; }
+
+    /* Stats */
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card { background: #fff; border-radius: 16px; padding: 1.2rem; box-shadow: 0 2px 16px rgba(92,61,30,0.07); border: 1px solid rgba(212,168,75,0.1); display: flex; align-items: center; gap: 1rem; }
+    .stat-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
+    .si-orange { background: rgba(196,87,26,0.1); } .si-green { background: rgba(58,90,46,0.1); }
+    .si-gold { background: rgba(212,168,75,0.12); } .si-blue { background: rgba(52,152,219,0.1); }
+    .stat-info-num { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--dark); }
+    .stat-info-label { font-size: .75rem; color: var(--text-light); }
+
+    /* Filtres commandes */
+    .filters-row { display: flex; gap: .6rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .filter-chip { padding: .4rem 1rem; border-radius: 50px; border: 1.5px solid rgba(196,87,26,0.2); background: transparent; cursor: pointer; font-size: .8rem; font-weight: 500; color: var(--text-light); font-family: 'DM Sans', sans-serif; transition: all .2s; }
+    .filter-chip:hover, .filter-chip.active { background: #3a5a2e; color: #fff; border-color: #3a5a2e; }
+
+    /* Table commandes */
+    .commandes-table { background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 2px 16px rgba(92,61,30,0.07); }
+    .table-header { display: grid; grid-template-columns: 2fr 1.5fr 1fr 1fr 1.2fr 1fr; gap: 1rem; padding: 1rem 1.5rem; background: var(--dark); color: rgba(255,255,255,0.6); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; }
+    .table-row { display: grid; grid-template-columns: 2fr 1.5fr 1fr 1fr 1.2fr 1fr; gap: 1rem; padding: 1rem 1.5rem; border-bottom: 1px solid rgba(212,168,75,0.08); align-items: center; transition: background .2s; }
+    .table-row:hover { background: rgba(212,168,75,0.04); }
+    .table-row:last-child { border-bottom: none; }
+    .tr-menu { font-weight: 600; font-size: .88rem; color: var(--dark); }
+    .tr-client { font-size: .82rem; color: var(--text-light); }
+    .tr-date { font-size: .82rem; color: var(--text-light); }
+    .tr-prix { font-weight: 600; color: var(--terracotta); font-size: .9rem; }
+    .statut-badge { padding: .25rem .7rem; border-radius: 50px; font-size: .68rem; font-weight: 600; white-space: nowrap; display: inline-block; }
+    .statut-attente    { background: rgba(212,168,75,0.12); color: #a07020; }
+    .statut-accepte    { background: rgba(58,90,46,0.1);   color: #3a5a2e; }
+    .statut-preparation{ background: rgba(196,87,26,0.1);  color: var(--terracotta); }
+    .statut-livraison  { background: rgba(92,61,30,0.1);   color: var(--brown); }
+    .statut-termine    { background: rgba(58,90,46,0.1);   color: #3a5a2e; }
+
+    .btn-action { padding: .3rem .8rem; border-radius: 8px; border: 1.5px solid rgba(196,87,26,0.25); background: transparent; cursor: pointer; font-size: .75rem; font-family: 'DM Sans', sans-serif; color: var(--terracotta); transition: all .2s; }
+    .btn-action:hover { background: var(--terracotta); color: #fff; border-color: var(--terracotta); }
+
+    /* Menus */
+    .menus-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; }
+    .menu-manage-card { background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 16px rgba(92,61,30,0.07); border: 1px solid rgba(212,168,75,0.1); }
+    .menu-manage-img { height: 100px; display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+    .img-noel { background: linear-gradient(135deg, #1a3a1a, #2d5c2d); }
+    .img-paques { background: linear-gradient(135deg, #7ab648, #4a9c2f); }
+    .img-classic { background: linear-gradient(135deg, #c4571a, #e07040); }
+    .img-event { background: linear-gradient(135deg, #d4a84b, #a07020); }
+    .menu-manage-body { padding: 1.1rem; }
+    .menu-manage-title { font-weight: 600; font-size: .9rem; color: var(--dark); margin-bottom: .3rem; }
+    .menu-manage-prix { font-size: .85rem; color: var(--terracotta); font-weight: 600; margin-bottom: .8rem; }
+    .menu-manage-actions { display: flex; gap: .5rem; }
+    .btn-edit { flex: 1; padding: .4rem; border-radius: 8px; border: 1.5px solid rgba(58,90,46,0.3); background: transparent; cursor: pointer; font-size: .78rem; font-family: 'DM Sans', sans-serif; color: #3a5a2e; transition: all .2s; }
+    .btn-edit:hover { background: #3a5a2e; color: #fff; }
+    .btn-del { padding: .4rem .8rem; border-radius: 8px; border: 1.5px solid rgba(196,87,26,0.25); background: transparent; cursor: pointer; font-size: .78rem; font-family: 'DM Sans', sans-serif; color: var(--terracotta); transition: all .2s; }
+    .btn-del:hover { background: var(--terracotta); color: #fff; }
+
+    /* Horaires */
+    .horaires-card { background: #fff; border-radius: 20px; padding: 2rem; box-shadow: 0 2px 16px rgba(92,61,30,0.07); max-width: 500px; }
+    .horaire-edit-row { display: grid; grid-template-columns: 100px 1fr 1fr auto; gap: .8rem; align-items: center; margin-bottom: .8rem; }
+    .horaire-edit-row label { font-size: .85rem; font-weight: 500; color: var(--text); }
+    .horaire-edit-row input { padding: .5rem .8rem; border: 1.5px solid rgba(196,87,26,0.2); border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: .85rem; outline: none; }
+    .horaire-edit-row input:focus { border-color: #3a5a2e; }
+    .toggle-ferme { padding: .4rem .8rem; border-radius: 8px; border: 1.5px solid rgba(220,50,50,0.2); background: rgba(220,50,50,0.05); cursor: pointer; font-size: .75rem; color: #c0392b; font-family: 'DM Sans', sans-serif; transition: all .2s; }
+
+    /* Avis à valider */
+    .avis-list { display: flex; flex-direction: column; gap: 1rem; }
+    .avis-validate-card { background: #fff; border-radius: 16px; padding: 1.4rem; box-shadow: 0 2px 16px rgba(92,61,30,0.07); display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+    .avis-stars { color: var(--gold); font-size: .9rem; margin-bottom: .3rem; }
+    .avis-comment { font-size: .85rem; color: var(--text-light); font-style: italic; margin-bottom: .3rem; }
+    .avis-author-small { font-size: .75rem; color: var(--text-light); }
+    .avis-btns { display: flex; gap: .5rem; flex-shrink: 0; }
+    .btn-valider-avis { padding: .4rem 1rem; border-radius: 8px; border: none; background: #3a5a2e; color: #fff; cursor: pointer; font-size: .78rem; font-family: 'DM Sans', sans-serif; transition: all .2s; }
+    .btn-refuser-avis { padding: .4rem 1rem; border-radius: 8px; border: 1.5px solid rgba(196,87,26,0.3); background: transparent; color: var(--terracotta); cursor: pointer; font-size: .78rem; font-family: 'DM Sans', sans-serif; transition: all .2s; }
+
+    @media (max-width: 900px) {
+      .dashboard-layout { grid-template-columns: 1fr; }
+      .dash-sidebar { height: auto; position: static; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .table-header, .table-row { grid-template-columns: 1fr 1fr; font-size: .75rem; }
+      .dash-main { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo-wrap">
+      <span class="nav-logo"><span class="logo-vite">Vite</span><span class="logo-et">&amp;</span><span class="logo-gour">Gourmand</span></span>
+      <span class="nav-logo-sub">Traiteur • Bordeaux</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="menus.html">Nos Menus</a></li>
+      <li><a href="espace-employe.html" class="active" style="color:#7ab648;">🛠️ Espace Employé</a></li>
+      <li><a href="connexion.html" class="nav-cta">Se déconnecter</a></li>
+    </ul>
+  </nav>
+
+  <div class="dashboard-layout">
+    <aside class="dash-sidebar">
+      <div class="dash-user">
+        <div class="dash-avatar">J</div>
+        <div class="dash-username">José Martin</div>
+        <div class="dash-role">Employé</div>
+      </div>
+      <div class="dash-nav-title">Gestion</div>
+      <ul class="dash-nav">
+        <li><a href="#" class="active" onclick="showSection('accueil')"><span class="nav-icon">🏠</span> Tableau de bord</a></li>
+        <li><a href="#" onclick="showSection('commandes')"><span class="nav-icon">📦</span> Commandes <span class="badge">5</span></a></li>
+        <li><a href="#" onclick="showSection('menus')"><span class="nav-icon">🍽️</span> Menus</a></li>
+        <li><a href="#" onclick="showSection('horaires')"><span class="nav-icon">🕐</span> Horaires</a></li>
+        <li><a href="#" onclick="showSection('avis')"><span class="nav-icon">⭐</span> Avis à valider <span class="badge">2</span></a></li>
+      </ul>
+      <div class="dash-logout">
+        <a href="connexion.html" class="btn-logout">🚪 Se déconnecter</a>
+      </div>
+    </aside>
+
+    <main class="dash-main">
+
+      <!-- Tableau de bord -->
+      <div class="dash-section active" id="section-accueil">
+        <div class="dash-header"><h1>Espace <em>Employé</em></h1></div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-icon si-orange">⏳</div><div><div class="stat-info-num">3</div><div class="stat-info-label">En attente</div></div></div>
+          <div class="stat-card"><div class="stat-icon si-green">✅</div><div><div class="stat-info-num">2</div><div class="stat-info-label">Acceptées</div></div></div>
+          <div class="stat-card"><div class="stat-icon si-gold">🚚</div><div><div class="stat-info-num">1</div><div class="stat-info-label">En livraison</div></div></div>
+          <div class="stat-card"><div class="stat-icon si-blue">⭐</div><div><div class="stat-info-num">2</div><div class="stat-info-label">Avis à valider</div></div></div>
+        </div>
+        <p style="font-size:.85rem; color:var(--text-light);">⚠️ Rappel : vous ne pouvez pas modifier ou annuler une commande directement. Contactez le client par GSM ou email avant toute annulation.</p>
+      </div>
+
+      <!-- Commandes -->
+      <div class="dash-section" id="section-commandes">
+        <div class="dash-header"><h1>Gestion des <em>commandes</em></h1></div>
+        <div class="filters-row">
+          <button class="filter-chip active" onclick="filterCommande(this,'tous')">Toutes</button>
+          <button class="filter-chip" onclick="filterCommande(this,'attente')">⏳ En attente</button>
+          <button class="filter-chip" onclick="filterCommande(this,'accepte')">✅ Acceptées</button>
+          <button class="filter-chip" onclick="filterCommande(this,'preparation')">👨‍🍳 En préparation</button>
+          <button class="filter-chip" onclick="filterCommande(this,'livraison')">🚚 Livraison</button>
+          <button class="filter-chip" onclick="filterCommande(this,'termine')">🏁 Terminées</button>
+        </div>
+        <div class="commandes-table">
+          <div class="table-header"><span>Menu</span><span>Client</span><span>Date</span><span>Montant</span><span>Statut</span><span>Action</span></div>
+          <div class="table-row" data-statut="attente"><span class="tr-menu">🎄 Festin de Noël</span><span class="tr-client">Marie D. • 06 12 34 56 78</span><span class="tr-date">24 déc.</span><span class="tr-prix">780€</span><span class="statut-badge statut-attente">En attente</span><button class="btn-action" onclick="avancerStatut(this,'Acceptée')">→ Accepter</button></div>
+          <div class="table-row" data-statut="attente"><span class="tr-menu">🌱 Menu Vegan</span><span class="tr-client">Thomas B. • 06 98 76 54 32</span><span class="tr-date">15 jan.</span><span class="tr-prix">175€</span><span class="statut-badge statut-attente">En attente</span><button class="btn-action" onclick="avancerStatut(this,'Acceptée')">→ Accepter</button></div>
+          <div class="table-row" data-statut="accepte"><span class="tr-menu">🐣 Table Pâques</span><span class="tr-client">Sophie L. • 06 11 22 33 44</span><span class="tr-date">20 avr.</span><span class="tr-prix">384€</span><span class="statut-badge statut-accepte">Acceptée</span><button class="btn-action" onclick="avancerStatut(this,'En préparation')">→ Préparer</button></div>
+          <div class="table-row" data-statut="livraison"><span class="tr-menu">🍽️ Classique Bordeaux</span><span class="tr-client">Julie D. • 06 12 34 56 78</span><span class="tr-date">10 jan.</span><span class="tr-prix">228€</span><span class="statut-badge statut-livraison">En livraison</span><button class="btn-action" onclick="avancerStatut(this,'Livré')">→ Livré</button></div>
+        </div>
+      </div>
+
+      <!-- Menus -->
+      <div class="dash-section" id="section-menus">
+        <div class="dash-header">
+          <h1>Gestion des <em>menus</em></h1>
+          <button class="btn-primary" style="font-size:.85rem; padding:.6rem 1.4rem;" onclick="alert('Formulaire ajout menu (à connecter au back-end)')">+ Nouveau menu</button>
+        </div>
+        <div class="menus-grid">
+          <div class="menu-manage-card"><div class="menu-manage-img img-noel">🎄</div><div class="menu-manage-body"><div class="menu-manage-title">Le Grand Festin de Noël</div><div class="menu-manage-prix">65€ / pers. • min. 8</div><div class="menu-manage-actions"><button class="btn-edit" onclick="alert('Modifier menu')">✏️ Modifier</button><button class="btn-del" onclick="alert('Supprimer menu')">🗑️</button></div></div></div>
+          <div class="menu-manage-card"><div class="menu-manage-img img-paques">🐣</div><div class="menu-manage-body"><div class="menu-manage-title">Table de Pâques</div><div class="menu-manage-prix">48€ / pers. • min. 6</div><div class="menu-manage-actions"><button class="btn-edit" onclick="alert('Modifier menu')">✏️ Modifier</button><button class="btn-del" onclick="alert('Supprimer menu')">🗑️</button></div></div></div>
+          <div class="menu-manage-card"><div class="menu-manage-img img-classic">🍽️</div><div class="menu-manage-body"><div class="menu-manage-title">Menu Classique Bordeaux</div><div class="menu-manage-prix">38€ / pers. • min. 4</div><div class="menu-manage-actions"><button class="btn-edit" onclick="alert('Modifier menu')">✏️ Modifier</button><button class="btn-del" onclick="alert('Supprimer menu')">🗑️</button></div></div></div>
+          <div class="menu-manage-card"><div class="menu-manage-img img-event">🎉</div><div class="menu-manage-body"><div class="menu-manage-title">Cocktail Dinatoire</div><div class="menu-manage-prix">75€ / pers. • min. 20</div><div class="menu-manage-actions"><button class="btn-edit" onclick="alert('Modifier menu')">✏️ Modifier</button><button class="btn-del" onclick="alert('Supprimer menu')">🗑️</button></div></div></div>
+        </div>
+      </div>
+
+      <!-- Horaires -->
+      <div class="dash-section" id="section-horaires">
+        <div class="dash-header"><h1>Modifier les <em>horaires</em></h1></div>
+        <div class="horaires-card">
+          <div class="horaire-edit-row"><label>Lundi</label><input type="time" value="09:00"/><input type="time" value="18:00"/><button class="toggle-ferme">Fermé</button></div>
+          <div class="horaire-edit-row"><label>Mardi</label><input type="time" value="09:00"/><input type="time" value="18:00"/><button class="toggle-ferme">Fermé</button></div>
+          <div class="horaire-edit-row"><label>Mercredi</label><input type="time" value="09:00"/><input type="time" value="18:00"/><button class="toggle-ferme">Fermé</button></div>
+          <div class="horaire-edit-row"><label>Jeudi</label><input type="time" value="09:00"/><input type="time" value="18:00"/><button class="toggle-ferme">Fermé</button></div>
+          <div class="horaire-edit-row"><label>Vendredi</label><input type="time" value="09:00"/><input type="time" value="17:00"/><button class="toggle-ferme">Fermé</button></div>
+          <div class="horaire-edit-row"><label>Samedi</label><input type="time" value="10:00"/><input type="time" value="15:00"/><button class="toggle-ferme">Fermé</button></div>
+          <div class="horaire-edit-row"><label>Dimanche</label><input type="time" disabled/><input type="time" disabled/><button class="toggle-ferme" style="background:rgba(220,50,50,0.15);">Fermé ✓</button></div>
+          <button class="btn-save" style="margin-top:1rem; background:#3a5a2e;" onclick="alert('Horaires sauvegardés !')">💾 Sauvegarder</button>
+        </div>
+      </div>
+
+      <!-- Avis -->
+      <div class="dash-section" id="section-avis">
+        <div class="dash-header"><h1>Avis à <em>valider</em></h1></div>
+        <div class="avis-list">
+          <div class="avis-validate-card">
+            <div><div class="avis-stars">★★★★★</div><p class="avis-comment">"Excellent repas de Noël, tout était parfait !"</p><span class="avis-author-small">Marie D. • Menu Festin de Noël</span></div>
+            <div class="avis-btns"><button class="btn-valider-avis" onclick="validerAvis(this)">✅ Publier</button><button class="btn-refuser-avis" onclick="refuserAvis(this)">❌ Refuser</button></div>
+          </div>
+          <div class="avis-validate-card">
+            <div><div class="avis-stars">★★★☆☆</div><p class="avis-comment">"Bon repas mais livraison un peu tardive."</p><span class="avis-author-small">Thomas B. • Menu Vegan</span></div>
+            <div class="avis-btns"><button class="btn-valider-avis" onclick="validerAvis(this)">✅ Publier</button><button class="btn-refuser-avis" onclick="refuserAvis(this)">❌ Refuser</button></div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

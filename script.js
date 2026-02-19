@@ -315,6 +315,132 @@ function initContact() {
   };
 }
 
+/* ── DASHBOARD COMMUN (utilisateur / employé / admin) ── */
+function initDashboard() {
+  if (!document.querySelector('.dash-section')) return;
+
+  window.showSection = function(id) {
+    document.querySelectorAll('.dash-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.dash-nav li a').forEach(a => a.classList.remove('active'));
+    const section = document.getElementById('section-' + id);
+    if (section) section.classList.add('active');
+    event.currentTarget.classList.add('active');
+  };
+}
+
+/* ── ESPACE UTILISATEUR ── */
+function initEspaceUtilisateur() {
+  if (!document.getElementById('section-accueil') || !document.getElementById('avis-texte')) return;
+
+  let noteActuelle = 4;
+
+  window.setNote = function(n) {
+    noteActuelle = n;
+    document.querySelectorAll('.star-btn').forEach((btn, i) => {
+      btn.classList.toggle('active', i < n);
+    });
+  };
+
+  window.envoyerAvis = function() {
+    const texte = document.getElementById('avis-texte').value.trim();
+    if (!texte) { alert('Veuillez écrire un commentaire.'); return; }
+    // TODO : appel API PHP
+    alert('✅ Merci pour votre avis ! Il sera publié après validation de notre équipe.');
+    document.getElementById('avis-texte').value = '';
+  };
+
+  window.sauvegarderProfil = function() {
+    // TODO : appel API PHP
+    alert('✅ Profil mis à jour avec succès !');
+  };
+}
+
+/* ── ESPACE EMPLOYÉ ── */
+function initEspaceEmploye() {
+  if (!document.querySelector('.commandes-table')) return;
+
+  window.filterCommande = function(btn, statut) {
+    document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.table-row').forEach(row => {
+      if (statut === 'tous' || row.dataset.statut === statut) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  };
+
+  window.avancerStatut = function(btn, nouveauStatut) {
+    const row = btn.closest('.table-row');
+    const badge = row.querySelector('.statut-badge');
+    const classes = {
+      'Acceptée'       : 'statut-accepte',
+      'En préparation' : 'statut-preparation',
+      'En livraison'   : 'statut-livraison',
+      'Livré'          : 'statut-livraison',
+      'Terminée'       : 'statut-termine'
+    };
+    badge.className = 'statut-badge ' + (classes[nouveauStatut] || '');
+    badge.textContent = nouveauStatut;
+
+    // Bouton suivant
+    const suivants = {
+      'Acceptée'       : ['→ Préparer', 'En préparation'],
+      'En préparation' : ['→ Livrer',   'En livraison'],
+      'En livraison'   : ['→ Livré',    'Livré'],
+      'Livré'          : ['→ Terminer', 'Terminée']
+    };
+    if (suivants[nouveauStatut]) {
+      btn.textContent = suivants[nouveauStatut][0];
+      btn.onclick = () => avancerStatut(btn, suivants[nouveauStatut][1]);
+    } else {
+      btn.style.display = 'none';
+    }
+  };
+
+  window.validerAvis = function(btn) {
+    const card = btn.closest('.avis-validate-card');
+    card.style.opacity = '0';
+    card.style.transform = 'translateX(20px)';
+    card.style.transition = 'all .3s';
+    setTimeout(() => card.remove(), 300);
+  };
+
+  window.refuserAvis = function(btn) {
+    const card = btn.closest('.avis-validate-card');
+    card.style.opacity = '0';
+    card.style.transform = 'translateX(-20px)';
+    card.style.transition = 'all .3s';
+    setTimeout(() => card.remove(), 300);
+  };
+}
+
+/* ── ESPACE ADMIN ── */
+function initEspaceAdmin() {
+  if (!document.querySelector('.donut-chart')) return;
+
+  window.creerEmploye = function() {
+    const inputs = document.querySelectorAll('.create-emp-card input');
+    const prenom = inputs[0].value.trim();
+    const nom    = inputs[1].value.trim();
+    const email  = inputs[2].value.trim();
+    if (!prenom || !nom || !email) { alert('Veuillez remplir tous les champs.'); return; }
+    // TODO : appel API PHP — génère mot de passe, envoie email
+    alert(`✅ Compte créé pour ${prenom} ${nom}.\nUn email de notification a été envoyé à ${email}.`);
+    inputs.forEach(i => i.value = '');
+  };
+
+  // Filtres CA
+  document.querySelectorAll('.ca-filters .filter-chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.ca-filters .filter-chip').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      // TODO : recharger données depuis API selon période
+    });
+  });
+}
+
 /* ── INITIALISATION ── */
 document.addEventListener('DOMContentLoaded', () => {
   initScrollReveal();
@@ -323,4 +449,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initMenuDetail();
   initCommande();
   initContact();
+  initDashboard();
+  initEspaceUtilisateur();
+  initEspaceEmploye();
+  initEspaceAdmin();
 });

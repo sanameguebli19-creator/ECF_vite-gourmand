@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Espace Admin – Vite & Gourmand</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .dashboard-layout { display: grid; grid-template-columns: 260px 1fr; min-height: calc(100vh - 72px); }
+
+    /* SIDEBAR */
+    .dash-sidebar { background: #0f0a04; padding: 2rem 0; position: sticky; top: 0; height: calc(100vh - 72px); overflow-y: auto; }
+    .dash-user { padding: 0 1.5rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.07); margin-bottom: 1rem; }
+    .dash-avatar { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), var(--terracotta)); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: .8rem; }
+    .dash-username { font-weight: 600; color: #fff; font-size: .95rem; }
+    .dash-role { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); margin-top: .2rem; }
+    .dash-nav { list-style: none; }
+    .dash-nav li a { display: flex; align-items: center; gap: .75rem; padding: .75rem 1.5rem; color: rgba(255,255,255,0.5); text-decoration: none; font-size: .88rem; font-weight: 500; transition: all .2s; }
+    .dash-nav li a:hover { color: #fff; background: rgba(255,255,255,0.05); }
+    .dash-nav li a.active { color: #fff; background: rgba(212,168,75,0.15); border-right: 3px solid var(--gold); }
+    .dash-nav li a .nav-icon { font-size: 1.1rem; width: 20px; text-align: center; }
+    .dash-nav-title { font-size: .65rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,0.2); padding: 1rem 1.5rem .3rem; }
+    .dash-logout { padding: 1.5rem; border-top: 1px solid rgba(255,255,255,0.07); margin-top: 1rem; }
+    .btn-logout { display: flex; align-items: center; gap: .6rem; color: rgba(255,255,255,0.4); font-size: .85rem; text-decoration: none; background: none; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+    .btn-logout:hover { color: #fff; }
+
+    /* MAIN */
+    .dash-main { background: var(--cream); padding: 2.5rem; overflow-y: auto; }
+    .dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
+    .dash-header h1 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--dark); }
+    .dash-header h1 em { color: var(--gold); font-style: italic; }
+    .dash-section { display: none; }
+    .dash-section.active { display: block; }
+
+    /* Stats */
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card { background: #fff; border-radius: 16px; padding: 1.2rem; box-shadow: 0 2px 16px rgba(92,61,30,0.07); border: 1px solid rgba(212,168,75,0.1); display: flex; align-items: center; gap: 1rem; }
+    .stat-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
+    .si-orange { background: rgba(196,87,26,0.1); } .si-green { background: rgba(58,90,46,0.1); }
+    .si-gold { background: rgba(212,168,75,0.12); } .si-purple { background: rgba(142,68,173,0.1); }
+    .stat-info-num { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--dark); }
+    .stat-info-label { font-size: .75rem; color: var(--text-light); }
+    .stat-trend { font-size: .72rem; color: #3a5a2e; margin-top: .1rem; }
+
+    /* Graphique CA */
+    .charts-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+    .chart-card { background: #fff; border-radius: 20px; padding: 1.8rem; box-shadow: 0 2px 16px rgba(92,61,30,0.07); }
+    .chart-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--dark); margin-bottom: 1.2rem; display: flex; justify-content: space-between; align-items: center; }
+    .chart-filter { padding: .3rem .8rem; border-radius: 50px; border: 1.5px solid rgba(212,168,75,0.3); background: transparent; cursor: pointer; font-size: .75rem; font-family: 'DM Sans', sans-serif; color: var(--text-light); }
+
+    /* Graphique barres simulé */
+    .bar-chart { display: flex; align-items: flex-end; gap: .6rem; height: 160px; padding-bottom: 1.5rem; position: relative; border-bottom: 2px solid rgba(212,168,75,0.15); }
+    .bar-wrap { display: flex; flex-direction: column; align-items: center; flex: 1; gap: .3rem; }
+    .bar { border-radius: 6px 6px 0 0; width: 100%; transition: height .5s ease; cursor: pointer; position: relative; }
+    .bar:hover { filter: brightness(1.1); }
+    .bar-label { font-size: .68rem; color: var(--text-light); }
+    .bar-val { font-size: .7rem; font-weight: 600; color: var(--dark); }
+
+    /* Donut simulé */
+    .donut-chart { display: flex; flex-direction: column; gap: .6rem; }
+    .donut-item { display: flex; align-items: center; gap: .8rem; }
+    .donut-color { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+    .donut-label { font-size: .82rem; color: var(--text-light); flex: 1; }
+    .donut-val { font-size: .82rem; font-weight: 600; color: var(--dark); }
+    .donut-pct { font-size: .72rem; color: var(--text-light); }
+
+    /* Filtres CA */
+    .ca-filters { display: flex; gap: .6rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .filter-chip { padding: .4rem 1rem; border-radius: 50px; border: 1.5px solid rgba(212,168,75,0.2); background: transparent; cursor: pointer; font-size: .8rem; font-weight: 500; color: var(--text-light); font-family: 'DM Sans', sans-serif; transition: all .2s; }
+    .filter-chip:hover, .filter-chip.active { background: var(--gold); color: #fff; border-color: var(--gold); }
+
+    /* Employés */
+    .employes-list { display: flex; flex-direction: column; gap: 1rem; }
+    .employe-card { background: #fff; border-radius: 16px; padding: 1.2rem 1.5rem; box-shadow: 0 2px 16px rgba(92,61,30,0.07); display: flex; align-items: center; gap: 1.2rem; }
+    .emp-avatar { width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 700; color: #fff; flex-shrink: 0; }
+    .emp-info h3 { font-weight: 600; font-size: .9rem; color: var(--dark); }
+    .emp-info p  { font-size: .78rem; color: var(--text-light); }
+    .emp-status { margin-left: auto; padding: .25rem .8rem; border-radius: 50px; font-size: .72rem; font-weight: 600; }
+    .emp-actif   { background: rgba(58,90,46,0.1); color: #3a5a2e; }
+    .emp-inactif { background: rgba(196,87,26,0.1); color: var(--terracotta); }
+    .emp-actions { display: flex; gap: .5rem; }
+    .btn-sm { padding: .3rem .8rem; border-radius: 8px; border: 1.5px solid rgba(196,87,26,0.25); background: transparent; cursor: pointer; font-size: .75rem; font-family: 'DM Sans', sans-serif; color: var(--terracotta); transition: all .2s; }
+    .btn-sm:hover { background: var(--terracotta); color: #fff; }
+
+    /* Créer employé */
+    .create-emp-card { background: #fff; border-radius: 20px; padding: 2rem; box-shadow: 0 2px 16px rgba(92,61,30,0.07); max-width: 480px; margin-top: 1.5rem; }
+    .form-group { display: flex; flex-direction: column; gap: .4rem; margin-bottom: 1rem; }
+    .form-group label { font-size: .82rem; font-weight: 500; color: var(--text); }
+    .form-group input { padding: .7rem 1rem; border: 1.5px solid rgba(196,87,26,0.2); border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: .9rem; color: var(--text); outline: none; transition: border-color .2s; }
+    .form-group input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(212,168,75,0.1); }
+    .btn-gold { background: var(--gold); color: #fff; border: none; padding: .8rem 2rem; border-radius: 12px; font-size: .9rem; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all .2s; }
+    .btn-gold:hover { background: var(--gold-light); color: var(--dark); transform: translateY(-1px); }
+
+    /* Commandes par menu */
+    .menu-stats-list { display: flex; flex-direction: column; gap: .8rem; }
+    .menu-stat-row { background: #fff; border-radius: 14px; padding: 1rem 1.3rem; display: flex; align-items: center; gap: 1rem; box-shadow: 0 2px 12px rgba(92,61,30,0.06); }
+    .menu-stat-emoji { font-size: 1.8rem; }
+    .menu-stat-info { flex: 1; }
+    .menu-stat-info h4 { font-weight: 600; font-size: .88rem; color: var(--dark); }
+    .menu-stat-bar { height: 6px; background: #eee; border-radius: 3px; margin-top: .4rem; overflow: hidden; }
+    .menu-stat-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--terracotta), var(--gold)); }
+    .menu-stat-num { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--terracotta); }
+
+    @media (max-width: 900px) {
+      .dashboard-layout { grid-template-columns: 1fr; }
+      .dash-sidebar { height: auto; position: static; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .charts-grid { grid-template-columns: 1fr; }
+      .dash-main { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo-wrap">
+      <span class="nav-logo"><span class="logo-vite">Vite</span><span class="logo-et">&amp;</span><span class="logo-gour">Gourmand</span></span>
+      <span class="nav-logo-sub">Traiteur • Bordeaux</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="espace-admin.html" class="active" style="color:var(--gold);">👑 Administrateur</a></li>
+      <li><a href="connexion.html" class="nav-cta">Se déconnecter</a></li>
+    </ul>
+  </nav>
+
+  <div class="dashboard-layout">
+    <aside class="dash-sidebar">
+      <div class="dash-user">
+        <div class="dash-avatar">A</div>
+        <div class="dash-username">Administrateur</div>
+        <div class="dash-role">👑 Admin</div>
+      </div>
+      <div class="dash-nav-title">Tableau de bord</div>
+      <ul class="dash-nav">
+        <li><a href="#" class="active" onclick="showSection('accueil')"><span class="nav-icon">🏠</span> Vue d'ensemble</a></li>
+        <li><a href="#" onclick="showSection('ca')"><span class="nav-icon">💰</span> Chiffre d'affaires</a></li>
+        <li><a href="#" onclick="showSection('commandes-menus')"><span class="nav-icon">📊</span> Stats par menu</a></li>
+      </ul>
+      <div class="dash-nav-title">Gestion (comme employé)</div>
+      <ul class="dash-nav">
+        <li><a href="espace-employe.html"><span class="nav-icon">📦</span> Commandes</a></li>
+        <li><a href="espace-employe.html"><span class="nav-icon">🍽️</span> Menus</a></li>
+        <li><a href="espace-employe.html"><span class="nav-icon">⭐</span> Avis</a></li>
+      </ul>
+      <div class="dash-nav-title">Administration</div>
+      <ul class="dash-nav">
+        <li><a href="#" onclick="showSection('employes')"><span class="nav-icon">👥</span> Employés</a></li>
+      </ul>
+      <div class="dash-logout">
+        <a href="connexion.html" class="btn-logout">🚪 Se déconnecter</a>
+      </div>
+    </aside>
+
+    <main class="dash-main">
+
+      <!-- Vue d'ensemble -->
+      <div class="dash-section active" id="section-accueil">
+        <div class="dash-header"><h1>Vue d'<em>ensemble</em></h1></div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-icon si-gold">💰</div><div><div class="stat-info-num">12 450€</div><div class="stat-info-label">CA ce mois</div><div class="stat-trend">↑ +18% vs mois dernier</div></div></div>
+          <div class="stat-card"><div class="stat-icon si-orange">📦</div><div><div class="stat-info-num">28</div><div class="stat-info-label">Commandes ce mois</div><div class="stat-trend">↑ +5 vs mois dernier</div></div></div>
+          <div class="stat-card"><div class="stat-icon si-green">👥</div><div><div class="stat-info-num">142</div><div class="stat-info-label">Clients inscrits</div><div class="stat-trend">↑ +12 nouveaux</div></div></div>
+          <div class="stat-card"><div class="stat-icon si-purple">⭐</div><div><div class="stat-info-num">4.8</div><div class="stat-info-label">Note moyenne</div><div class="stat-trend">Sur 64 avis</div></div></div>
+        </div>
+
+        <div class="charts-grid">
+          <div class="chart-card">
+            <div class="chart-title">CA mensuel <select class="chart-filter"><option>2026</option><option>2025</option></select></div>
+            <div class="bar-chart">
+              <div class="bar-wrap"><div class="bar-val">4.2k</div><div class="bar" style="height:55%; background:linear-gradient(180deg,var(--terracotta),var(--gold));"></div><div class="bar-label">Jan</div></div>
+              <div class="bar-wrap"><div class="bar-val">5.8k</div><div class="bar" style="height:74%; background:linear-gradient(180deg,var(--terracotta),var(--gold));"></div><div class="bar-label">Fév</div></div>
+              <div class="bar-wrap"><div class="bar-val">3.9k</div><div class="bar" style="height:50%; background:linear-gradient(180deg,var(--terracotta),var(--gold));"></div><div class="bar-label">Mar</div></div>
+              <div class="bar-wrap"><div class="bar-val">6.1k</div><div class="bar" style="height:78%; background:linear-gradient(180deg,var(--terracotta),var(--gold));"></div><div class="bar-label">Avr</div></div>
+              <div class="bar-wrap"><div class="bar-val">7.3k</div><div class="bar" style="height:93%; background:linear-gradient(180deg,var(--terracotta),var(--gold));"></div><div class="bar-label">Mai</div></div>
+              <div class="bar-wrap"><div class="bar-val">5.5k</div><div class="bar" style="height:70%; background:linear-gradient(180deg,var(--terracotta),var(--gold));"></div><div class="bar-label">Jun</div></div>
+              <div class="bar-wrap"><div class="bar-val">12.4k</div><div class="bar" style="height:100%; background:linear-gradient(180deg,var(--gold),var(--terracotta));"></div><div class="bar-label">Déc</div></div>
+            </div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-title">Répartition par thème</div>
+            <div class="donut-chart">
+              <div class="donut-item"><div class="donut-color" style="background:#1a3a1a;"></div><span class="donut-label">Noël</span><span class="donut-val">38%</span></div>
+              <div class="donut-item"><div class="donut-color" style="background:#7ab648;"></div><span class="donut-label">Pâques</span><span class="donut-val">24%</span></div>
+              <div class="donut-item"><div class="donut-color" style="background:var(--terracotta);"></div><span class="donut-label">Classique</span><span class="donut-val">22%</span></div>
+              <div class="donut-item"><div class="donut-color" style="background:var(--gold);"></div><span class="donut-label">Événement</span><span class="donut-val">16%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chiffre d'affaires -->
+      <div class="dash-section" id="section-ca">
+        <div class="dash-header"><h1>Chiffre d'<em>affaires</em></h1></div>
+        <div class="ca-filters">
+          <button class="filter-chip active">Ce mois</button>
+          <button class="filter-chip">3 mois</button>
+          <button class="filter-chip">6 mois</button>
+          <button class="filter-chip">Cette année</button>
+          <button class="filter-chip">Personnalisé</button>
+        </div>
+        <div class="charts-grid">
+          <div class="chart-card">
+            <div class="chart-title">Évolution CA – Décembre 2025</div>
+            <div class="bar-chart">
+              <div class="bar-wrap"><div class="bar-val">1.2k</div><div class="bar" style="height:40%; background:var(--terracotta);"></div><div class="bar-label">S1</div></div>
+              <div class="bar-wrap"><div class="bar-val">2.8k</div><div class="bar" style="height:65%; background:var(--terracotta);"></div><div class="bar-label">S2</div></div>
+              <div class="bar-wrap"><div class="bar-val">4.2k</div><div class="bar" style="height:85%; background:var(--gold);"></div><div class="bar-label">S3</div></div>
+              <div class="bar-wrap"><div class="bar-val">4.2k</div><div class="bar" style="height:100%; background:var(--gold);"></div><div class="bar-label">S4</div></div>
+            </div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-title">CA par menu</div>
+            <div class="donut-chart">
+              <div class="donut-item"><div class="donut-color" style="background:#1a3a1a;"></div><span class="donut-label">Festin de Noël</span><span class="donut-val">5 460€</span></div>
+              <div class="donut-item"><div class="donut-color" style="background:var(--gold);"></div><span class="donut-label">Cocktail Prestige</span><span class="donut-val">3 750€</span></div>
+              <div class="donut-item"><div class="donut-color" style="background:#7ab648;"></div><span class="donut-label">Table Pâques</span><span class="donut-val">1 920€</span></div>
+              <div class="donut-item"><div class="donut-color" style="background:var(--terracotta);"></div><span class="donut-label">Classique</span><span class="donut-val">1 320€</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="stat-card" style="max-width:300px; border:2px solid rgba(212,168,75,0.3);">
+          <div class="stat-icon si-gold">💰</div>
+          <div><div class="stat-info-num">12 450€</div><div class="stat-info-label">Total CA — Décembre 2025</div></div>
+        </div>
+      </div>
+
+      <!-- Stats par menu -->
+      <div class="dash-section" id="section-commandes-menus">
+        <div class="dash-header"><h1>Commandes par <em>menu</em></h1></div>
+        <div class="menu-stats-list">
+          <div class="menu-stat-row"><div class="menu-stat-emoji">🎄</div><div class="menu-stat-info"><h4>Le Grand Festin de Noël</h4><div class="menu-stat-bar"><div class="menu-stat-fill" style="width:84%;"></div></div></div><div class="menu-stat-num">84</div></div>
+          <div class="menu-stat-row"><div class="menu-stat-emoji">🎉</div><div class="menu-stat-info"><h4>Cocktail Dinatoire Prestige</h4><div class="menu-stat-bar"><div class="menu-stat-fill" style="width:50%;"></div></div></div><div class="menu-stat-num">50</div></div>
+          <div class="menu-stat-row"><div class="menu-stat-emoji">🐣</div><div class="menu-stat-info"><h4>Table de Pâques Printanière</h4><div class="menu-stat-bar"><div class="menu-stat-fill" style="width:40%;"></div></div></div><div class="menu-stat-num">40</div></div>
+          <div class="menu-stat-row"><div class="menu-stat-emoji">🍽️</div><div class="menu-stat-info"><h4>Menu Classique Bordeaux</h4><div class="menu-stat-bar"><div class="menu-stat-fill" style="width:35%;"></div></div></div><div class="menu-stat-num">35</div></div>
+          <div class="menu-stat-row"><div class="menu-stat-emoji">🌱</div><div class="menu-stat-info"><h4>Menu Vegan Saveurs du Monde</h4><div class="menu-stat-bar"><div class="menu-stat-fill" style="width:20%;"></div></div></div><div class="menu-stat-num">20</div></div>
+        </div>
+      </div>
+
+      <!-- Employés -->
+      <div class="dash-section" id="section-employes">
+        <div class="dash-header"><h1>Gestion des <em>employés</em></h1></div>
+        <div class="employes-list">
+          <div class="employe-card">
+            <div class="emp-avatar" style="background:linear-gradient(135deg,#3a5a2e,#7ab648);">J</div>
+            <div class="emp-info"><h3>José Martin</h3><p>jose.martin@vitegourmand.fr • Employé depuis 2019</p></div>
+            <span class="emp-status emp-actif">Actif</span>
+            <div class="emp-actions"><button class="btn-sm" onclick="alert('Compte désactivé')">Désactiver</button></div>
+          </div>
+          <div class="employe-card">
+            <div class="emp-avatar" style="background:linear-gradient(135deg,var(--gold),var(--terracotta));">M</div>
+            <div class="emp-info"><h3>Marie Lebrun</h3><p>marie.lebrun@vitegourmand.fr • Employée depuis 2022</p></div>
+            <span class="emp-status emp-actif">Actif</span>
+            <div class="emp-actions"><button class="btn-sm" onclick="alert('Compte désactivé')">Désactiver</button></div>
+          </div>
+          <div class="employe-card">
+            <div class="emp-avatar" style="background:linear-gradient(135deg,#666,#999);">P</div>
+            <div class="emp-info"><h3>Paul Durand</h3><p>paul.durand@vitegourmand.fr • Ancien employé</p></div>
+            <span class="emp-status emp-inactif">Inactif</span>
+            <div class="emp-actions"><button class="btn-sm" onclick="alert('Compte réactivé')">Réactiver</button></div>
+          </div>
+        </div>
+        <div class="create-emp-card">
+          <h3 style="font-family:'Playfair Display',serif; font-size:1.1rem; margin-bottom:1.2rem;">➕ Créer un compte employé</h3>
+          <div class="form-group"><label>Prénom</label><input type="text" placeholder="Marie" /></div>
+          <div class="form-group"><label>Nom</label><input type="text" placeholder="Dupont" /></div>
+          <div class="form-group"><label>Email (= identifiant)</label><input type="email" placeholder="marie.dupont@vitegourmand.fr" /></div>
+          <p style="font-size:.75rem; color:var(--text-light); margin-bottom:1rem;">⚠️ Un mot de passe sera généré et communiqué à l'employé par un autre canal sécurisé.</p>
+          <button class="btn-gold" onclick="creerEmploye()">Créer le compte employé</button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mon Espace – Vite & Gourmand</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .dashboard-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: calc(100vh - 72px);
+    }
+
+    /* --- SIDEBAR --- */
+    .dash-sidebar {
+      background: var(--dark);
+      padding: 2rem 0;
+      position: sticky; top: 0;
+      height: calc(100vh - 72px);
+      overflow-y: auto;
+    }
+    .dash-user {
+      padding: 0 1.5rem 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      margin-bottom: 1rem;
+    }
+    .dash-avatar {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold-light), var(--terracotta));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; font-weight: 700; color: #fff;
+      margin-bottom: .8rem;
+    }
+    .dash-username { font-weight: 600; color: #fff; font-size: .95rem; }
+    .dash-role {
+      font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--gold); margin-top: .2rem;
+    }
+
+    .dash-nav { list-style: none; }
+    .dash-nav li a {
+      display: flex; align-items: center; gap: .75rem;
+      padding: .75rem 1.5rem;
+      color: rgba(255,255,255,0.5); text-decoration: none;
+      font-size: .88rem; font-weight: 500;
+      transition: all .2s; position: relative;
+    }
+    .dash-nav li a:hover { color: #fff; background: rgba(255,255,255,0.05); }
+    .dash-nav li a.active {
+      color: #fff; background: rgba(196,87,26,0.15);
+      border-right: 3px solid var(--terracotta);
+    }
+    .dash-nav li a .nav-icon { font-size: 1.1rem; width: 20px; text-align: center; }
+    .dash-nav-title {
+      font-size: .65rem; letter-spacing: .12em; text-transform: uppercase;
+      color: rgba(255,255,255,0.25); padding: 1rem 1.5rem .3rem;
+    }
+    .dash-nav .badge {
+      margin-left: auto; background: var(--terracotta);
+      color: #fff; font-size: .65rem; font-weight: 700;
+      padding: .1rem .45rem; border-radius: 50px;
+    }
+    .dash-logout {
+      padding: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      margin-top: 1rem;
+    }
+    .btn-logout {
+      display: flex; align-items: center; gap: .6rem;
+      color: rgba(255,255,255,0.4); font-size: .85rem;
+      text-decoration: none; transition: color .2s; background: none; border: none;
+      cursor: pointer; font-family: 'DM Sans', sans-serif; width: 100%;
+    }
+    .btn-logout:hover { color: #fff; }
+
+    /* --- CONTENU PRINCIPAL --- */
+    .dash-main {
+      background: var(--cream);
+      padding: 2.5rem;
+      overflow-y: auto;
+    }
+    .dash-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 2rem;
+    }
+    .dash-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; color: var(--dark);
+    }
+    .dash-header h1 em { color: var(--terracotta); font-style: italic; }
+
+    /* Onglets de section */
+    .section-tabs {
+      display: none;
+    }
+    .dash-section { display: none; }
+    .dash-section.active { display: block; }
+
+    /* Stats */
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem; margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: #fff; border-radius: 16px; padding: 1.4rem;
+      box-shadow: 0 2px 16px rgba(92,61,30,0.07);
+      border: 1px solid rgba(212,168,75,0.1);
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .stat-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+    }
+    .si-orange { background: rgba(196,87,26,0.1); }
+    .si-green  { background: rgba(58,90,46,0.1); }
+    .si-gold   { background: rgba(212,168,75,0.12); }
+    .stat-info-num { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: var(--dark); }
+    .stat-info-label { font-size: .78rem; color: var(--text-light); }
+
+    /* Commandes */
+    .commandes-list { display: flex; flex-direction: column; gap: 1rem; }
+    .commande-card {
+      background: #fff; border-radius: 16px; padding: 1.4rem 1.6rem;
+      box-shadow: 0 2px 16px rgba(92,61,30,0.07);
+      border: 1px solid rgba(212,168,75,0.1);
+      display: grid; grid-template-columns: auto 1fr auto auto;
+      gap: 1.2rem; align-items: center;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .commande-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(92,61,30,0.12); }
+    .commande-emoji { font-size: 2.2rem; }
+    .commande-info h3 { font-weight: 600; font-size: .95rem; color: var(--dark); margin-bottom: .2rem; }
+    .commande-info p  { font-size: .78rem; color: var(--text-light); }
+    .commande-prix { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--terracotta); text-align: right; }
+    .commande-pers { font-size: .75rem; color: var(--text-light); text-align: right; }
+
+    .statut-badge {
+      padding: .3rem .9rem; border-radius: 50px;
+      font-size: .72rem; font-weight: 600; letter-spacing: .04em;
+      white-space: nowrap;
+    }
+    .statut-attente    { background: rgba(212,168,75,0.12); color: #a07020; }
+    .statut-accepte    { background: rgba(58,90,46,0.1);   color: #3a5a2e; }
+    .statut-preparation{ background: rgba(196,87,26,0.1);  color: var(--terracotta); }
+    .statut-livraison  { background: rgba(92,61,30,0.1);   color: var(--brown); }
+    .statut-termine    { background: rgba(58,90,46,0.1);   color: #3a5a2e; }
+    .statut-annule     { background: rgba(220,50,50,0.08); color: #c0392b; }
+
+    /* Suivi commande */
+    .suivi-steps {
+      display: flex; flex-direction: column; gap: 0;
+      margin-top: 1rem;
+    }
+    .suivi-step {
+      display: flex; gap: 1rem; align-items: flex-start;
+      padding-bottom: 1.2rem; position: relative;
+    }
+    .suivi-step::before {
+      content: ''; position: absolute;
+      left: 15px; top: 30px; bottom: 0;
+      width: 2px; background: rgba(212,168,75,0.15);
+    }
+    .suivi-step:last-child::before { display: none; }
+    .suivi-dot {
+      width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .9rem; border: 2px solid rgba(212,168,75,0.2);
+      background: #fff; z-index: 1;
+    }
+    .suivi-dot.done  { background: #3a5a2e; border-color: #3a5a2e; color: #fff; }
+    .suivi-dot.current { background: var(--terracotta); border-color: var(--terracotta); color: #fff; }
+    .suivi-info h4   { font-size: .88rem; font-weight: 600; color: var(--dark); }
+    .suivi-info span { font-size: .75rem; color: var(--text-light); }
+
+    /* Profil */
+    .profil-card {
+      background: #fff; border-radius: 20px; padding: 2rem;
+      box-shadow: 0 2px 16px rgba(92,61,30,0.07);
+      border: 1px solid rgba(212,168,75,0.1);
+      max-width: 600px;
+    }
+    .profil-form { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .profil-form .full { grid-column: 1 / -1; }
+    .form-group { display: flex; flex-direction: column; gap: .4rem; }
+    .form-group label { font-size: .82rem; font-weight: 500; color: var(--text); }
+    .form-group input {
+      padding: .7rem 1rem;
+      border: 1.5px solid rgba(196,87,26,0.2); border-radius: 12px;
+      font-family: 'DM Sans', sans-serif; font-size: .9rem;
+      color: var(--text); outline: none; transition: border-color .2s;
+    }
+    .form-group input:focus { border-color: var(--terracotta); box-shadow: 0 0 0 3px rgba(196,87,26,0.08); }
+    .btn-save {
+      background: var(--terracotta); color: #fff; border: none;
+      padding: .8rem 2rem; border-radius: 12px;
+      font-size: .9rem; font-weight: 600; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; transition: all .2s; margin-top: .5rem;
+    }
+    .btn-save:hover { background: var(--terracotta-light); transform: translateY(-1px); }
+
+    /* Avis */
+    .avis-form-card {
+      background: #fff; border-radius: 20px; padding: 2rem;
+      box-shadow: 0 2px 16px rgba(92,61,30,0.07);
+      border: 1px solid rgba(212,168,75,0.1);
+      margin-bottom: 1.5rem;
+    }
+    .stars-input { display: flex; gap: .4rem; margin: .5rem 0 1rem; }
+    .star-btn { font-size: 1.8rem; background: none; border: none; cursor: pointer; opacity: .3; transition: opacity .2s; }
+    .star-btn.active { opacity: 1; }
+    textarea.avis-texte {
+      width: 100%; padding: .75rem 1rem;
+      border: 1.5px solid rgba(196,87,26,0.2); border-radius: 12px;
+      font-family: 'DM Sans', sans-serif; font-size: .9rem;
+      resize: vertical; min-height: 100px; outline: none;
+    }
+    textarea.avis-texte:focus { border-color: var(--terracotta); }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .dashboard-layout { grid-template-columns: 1fr; }
+      .dash-sidebar { height: auto; position: static; display: flex; flex-wrap: wrap; padding: 1rem; gap: .5rem; }
+      .dash-user { border: none; padding: 0; }
+      .dash-nav { display: flex; flex-wrap: wrap; }
+      .dash-nav li a { padding: .5rem .8rem; border-radius: 50px; font-size: .78rem; }
+      .dash-nav li a.active { border-right: none; background: var(--terracotta); }
+      .dash-main { padding: 1.5rem; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .commande-card { grid-template-columns: auto 1fr; }
+      .profil-form { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo-wrap">
+      <span class="nav-logo"><span class="logo-vite">Vite</span><span class="logo-et">&amp;</span><span class="logo-gour">Gourmand</span></span>
+      <span class="nav-logo-sub">Traiteur • Bordeaux</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="menus.html">Nos Menus</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="espace-utilisateur.html" class="active" style="color:var(--terracotta);">👤 Mon Espace</a></li>
+      <li><a href="connexion.html" class="nav-cta">Se déconnecter</a></li>
+    </ul>
+  </nav>
+
+  <div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="dash-sidebar">
+      <div class="dash-user">
+        <div class="dash-avatar">J</div>
+        <div class="dash-username">Julie Dupont</div>
+        <div class="dash-role">Client</div>
+      </div>
+
+      <div class="dash-nav-title">Menu</div>
+      <ul class="dash-nav">
+        <li><a href="#" class="active" onclick="showSection('accueil')"><span class="nav-icon">🏠</span> Tableau de bord</a></li>
+        <li><a href="#" onclick="showSection('commandes')"><span class="nav-icon">📦</span> Mes commandes <span class="badge">3</span></a></li>
+        <li><a href="#" onclick="showSection('suivi')"><span class="nav-icon">🚚</span> Suivi en cours</a></li>
+        <li><a href="#" onclick="showSection('avis')"><span class="nav-icon">⭐</span> Donner un avis</a></li>
+      </ul>
+
+      <div class="dash-nav-title">Compte</div>
+      <ul class="dash-nav">
+        <li><a href="#" onclick="showSection('profil')"><span class="nav-icon">👤</span> Mon profil</a></li>
+      </ul>
+
+      <div class="dash-logout">
+        <a href="connexion.html" class="btn-logout">🚪 Se déconnecter</a>
+      </div>
+    </aside>
+
+    <!-- CONTENU -->
+    <main class="dash-main">
+
+      <!-- Tableau de bord -->
+      <div class="dash-section active" id="section-accueil">
+        <div class="dash-header">
+          <h1>Bonjour, <em>Julie</em> 👋</h1>
+          <a href="menus.html" class="btn-primary" style="font-size:.85rem; padding:.6rem 1.4rem;">+ Nouvelle commande</a>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon si-orange">📦</div>
+            <div><div class="stat-info-num">3</div><div class="stat-info-label">Commandes totales</div></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon si-green">✅</div>
+            <div><div class="stat-info-num">2</div><div class="stat-info-label">Commandes terminées</div></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon si-gold">⭐</div>
+            <div><div class="stat-info-num">1</div><div class="stat-info-label">Avis donnés</div></div>
+          </div>
+        </div>
+        <h2 style="font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--dark); margin-bottom:1rem;">Commandes récentes</h2>
+        <div class="commandes-list">
+          <div class="commande-card">
+            <div class="commande-emoji">🚚</div>
+            <div class="commande-info"><h3>Le Grand Festin de Noël</h3><p>Prestation le 24 déc. 2025 • 12 personnes</p></div>
+            <div><div class="commande-prix">780€</div><div class="commande-pers">12 pers.</div></div>
+            <span class="statut-badge statut-livraison">En livraison</span>
+          </div>
+          <div class="commande-card">
+            <div class="commande-emoji">🐣</div>
+            <div class="commande-info"><h3>Table de Pâques Printanière</h3><p>Prestation le 20 avr. 2025 • 8 personnes</p></div>
+            <div><div class="commande-prix">384€</div><div class="commande-pers">8 pers.</div></div>
+            <span class="statut-badge statut-termine">Terminée</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mes commandes -->
+      <div class="dash-section" id="section-commandes">
+        <div class="dash-header">
+          <h1>Mes <em>commandes</em></h1>
+        </div>
+        <div class="commandes-list">
+          <div class="commande-card">
+            <div class="commande-emoji">🚚</div>
+            <div class="commande-info"><h3>Le Grand Festin de Noël</h3><p>Prestation le 24 déc. 2025 • 12 personnes • 12 rue des Chartrons, Bordeaux</p></div>
+            <div><div class="commande-prix">780€</div></div>
+            <span class="statut-badge statut-livraison">En livraison</span>
+          </div>
+          <div class="commande-card">
+            <div class="commande-emoji">🐣</div>
+            <div class="commande-info"><h3>Table de Pâques Printanière</h3><p>Prestation le 20 avr. 2025 • 8 personnes</p></div>
+            <div><div class="commande-prix">384€</div></div>
+            <span class="statut-badge statut-termine">Terminée ✓</span>
+          </div>
+          <div class="commande-card">
+            <div class="commande-emoji">🍽️</div>
+            <div class="commande-info"><h3>Menu Classique Bordeaux</h3><p>Prestation le 10 jan. 2025 • 6 personnes</p></div>
+            <div><div class="commande-prix">228€</div></div>
+            <span class="statut-badge statut-termine">Terminée ✓</span>
+          </div>
+        </div>
+        <p style="font-size:.78rem; color:var(--text-light); margin-top:1rem;">💡 Vous pouvez annuler une commande tant qu'elle n'est pas encore "Acceptée" par notre équipe.</p>
+      </div>
+
+      <!-- Suivi -->
+      <div class="dash-section" id="section-suivi">
+        <div class="dash-header"><h1>Suivi de <em>commande</em></h1></div>
+        <div style="background:#fff; border-radius:20px; padding:2rem; box-shadow:0 2px 16px rgba(92,61,30,0.07); max-width:500px;">
+          <h3 style="font-family:'Playfair Display',serif; font-size:1.1rem; margin-bottom:.3rem;">🎄 Le Grand Festin de Noël</h3>
+          <p style="font-size:.82rem; color:var(--text-light); margin-bottom:1.5rem;">Prestation le 24 déc. 2025</p>
+          <div class="suivi-steps">
+            <div class="suivi-step"><div class="suivi-dot done">✓</div><div class="suivi-info"><h4>Commande reçue</h4><span>20 déc. 2025 à 10h14</span></div></div>
+            <div class="suivi-step"><div class="suivi-dot done">✓</div><div class="suivi-info"><h4>Acceptée</h4><span>20 déc. 2025 à 14h30</span></div></div>
+            <div class="suivi-step"><div class="suivi-dot done">✓</div><div class="suivi-info"><h4>En préparation</h4><span>24 déc. 2025 à 8h00</span></div></div>
+            <div class="suivi-step"><div class="suivi-dot current">🚚</div><div class="suivi-info"><h4>En cours de livraison</h4><span>24 déc. 2025 à 11h45</span></div></div>
+            <div class="suivi-step"><div class="suivi-dot">📦</div><div class="suivi-info"><h4>Livré</h4><span>En attente</span></div></div>
+            <div class="suivi-step"><div class="suivi-dot">⭐</div><div class="suivi-info"><h4>Terminée</h4><span>En attente</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Avis -->
+      <div class="dash-section" id="section-avis">
+        <div class="dash-header"><h1>Donner un <em>avis</em></h1></div>
+        <div class="avis-form-card" style="max-width:500px;">
+          <h3 style="font-family:'Playfair Display',serif; font-size:1.1rem; margin-bottom:.5rem;">🐣 Table de Pâques Printanière</h3>
+          <p style="font-size:.82rem; color:var(--text-light); margin-bottom:1rem;">Prestation du 20 avr. 2025</p>
+          <label style="font-size:.82rem; font-weight:500;">Votre note *</label>
+          <div class="stars-input">
+            <button class="star-btn active" onclick="setNote(1)">★</button>
+            <button class="star-btn active" onclick="setNote(2)">★</button>
+            <button class="star-btn active" onclick="setNote(3)">★</button>
+            <button class="star-btn active" onclick="setNote(4)">★</button>
+            <button class="star-btn" onclick="setNote(5)">★</button>
+          </div>
+          <label style="font-size:.82rem; font-weight:500;">Votre commentaire *</label>
+          <textarea class="avis-texte" id="avis-texte" placeholder="Décrivez votre expérience…" style="margin-top:.4rem;"></textarea>
+          <button class="btn-save" style="margin-top:1rem;" onclick="envoyerAvis()">Envoyer mon avis ★</button>
+        </div>
+      </div>
+
+      <!-- Profil -->
+      <div class="dash-section" id="section-profil">
+        <div class="dash-header"><h1>Mon <em>profil</em></h1></div>
+        <div class="profil-card">
+          <div class="profil-form">
+            <div class="form-group"><label>Prénom</label><input type="text" value="Julie" /></div>
+            <div class="form-group"><label>Nom</label><input type="text" value="Dupont" /></div>
+            <div class="form-group"><label>Email</label><input type="email" value="julie@exemple.fr" /></div>
+            <div class="form-group"><label>GSM</label><input type="tel" value="+33 6 12 34 56 78" /></div>
+            <div class="form-group full"><label>Adresse postale</label><input type="text" value="12 rue des Chartrons, 33000 Bordeaux" /></div>
+            <div class="form-group"><label>Nouveau mot de passe</label><input type="password" placeholder="Laisser vide pour ne pas changer" /></div>
+            <div class="form-group"><label>Confirmer mot de passe</label><input type="password" placeholder="••••••••••" /></div>
+          </div>
+          <button class="btn-save" onclick="sauvegarderProfil()">💾 Sauvegarder les modifications</button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
