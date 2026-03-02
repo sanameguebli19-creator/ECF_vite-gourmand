@@ -192,6 +192,12 @@ footer {
 }
 .horaire-day { color: rgba(255,255,255,0.5); }
 .horaire-time { color: rgba(255,255,255,0.85); }
+.horaire-row.fermé .horaire-day,
+.horaire-row.fermé .horaire-time {
+  color: #e74c3c; /* rouge */
+  font-weight: 500;
+}
+
 
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.08);
