@@ -12,12 +12,15 @@ function initScrollReveal() {
     el.style.transform = 'translateY(24px)';
     el.style.transition = 'opacity .6s ease, transform .6s ease';
   });
-
-  const observer = new IntersectionObserver(entries => {
+const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
         e.target.style.opacity = '1';
         e.target.style.transform = 'translateY(0)';
+        // Après animation → transition hover activée
+        setTimeout(() => {
+          e.target.style.transition = 'transform .5s ease';
+        }, 600);
       }
     });
   }, { threshold: 0.1 });
@@ -440,8 +443,6 @@ function initEspaceAdmin() {
     });
   });
 }
-
-/* ── INITIALISATION ── */
 document.addEventListener('DOMContentLoaded', () => {
   initScrollReveal();
   initFiltres();
@@ -453,4 +454,15 @@ document.addEventListener('DOMContentLoaded', () => {
   initEspaceUtilisateur();
   initEspaceEmploye();
   initEspaceAdmin();
+
+  // Transition cartes avis ← AJOUTER ICI
+  document.querySelectorAll('.avis-card').forEach(card => {
+    card.addEventListener('mouseenter', function() {
+      this.style.transform = 'translateY(-20px)';
+      this.style.transition = 'transform 0.5s ease';
+    });
+    card.addEventListener('mouseleave', function() {
+      this.style.transform = 'translateY(0)';
+    });
+  });
 });

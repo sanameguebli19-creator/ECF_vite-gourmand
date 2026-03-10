@@ -192,12 +192,26 @@ footer {
 }
 .horaire-day { color: rgba(255,255,255,0.5); }
 .horaire-time { color: rgba(255,255,255,0.85); }
-.horaire-row.fermé .horaire-day,
-.horaire-row.fermé .horaire-time {
-  color: #e74c3c; /* rouge */
+.horaire-row.ferme .horaire-day,
+.horaire-row.ferme .horaire-time {
+  color: #e74c3c;
   font-weight: 500;
 }
 
+.footer-contact-item {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-size: .85rem;
+  margin-bottom: .5rem;
+}
+
+.footer-logo-sub {
+  font-size: .8rem;
+  color: rgba(255,255,255,0.5);
+  display: block;
+  margin-bottom: 1rem;
+}
 
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.08);
