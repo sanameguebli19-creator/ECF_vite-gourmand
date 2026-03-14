@@ -27,14 +27,63 @@ const observer = new IntersectionObserver(entries => {
 
   elements.forEach(el => observer.observe(el));
 }
+/*afficher les menus*/
+function afficherMenus(menus) {
+  const grid = document.getElementById('menuGrid');
+  const countEl= document.getElementById('count');
+  const themes={
+    noel:{emoji:'🎄',label:'Noël'},
+    paques:{emoji:'🐣',label:'Paques'},
+    classique:{emoji:'🍽️',label:'Classique'},
+    evenement:{emoji:'🎉',label:'Événement'},
+    vegetarien:{emoji:'🌿',label:'Végétarien'},
+    vegan:{emoji:'🌱',label:'Vegan'}
+
+  };
+  grid.innerHTML = '';
+  menus.forEach(menu => {
+    const theme = themes[menu.theme] || {emoji:'🍽️', label: menu.theme};
+    const carte = document.createElement('div');
+    carte.className = 'menu-card';
+    carte.dataset.theme = menu.theme;
+    carte.dataset.regime = menu.regime;
+    carte.dataset.prix = menu.prix;
+    carte.dataset.personnes = menu.personne_min;
+    carte.innerHTML = `
+    <div class="menu-card-img img-${menu.theme}">${theme.emoji}
+    <span class="menu-badge">${theme.label}</span> 
+    </div>
+    <div class="menu-card-body">
+    <h3 class="menu-card-title">${menu.titre}</h3>
+     <p class="menu-card-theme">${theme.label}</p>
+    <p class="menu-card-desc">${menu.description}</p>
+      <div class="menu-footer">
+      </div>
+    </div>
+    <div>
+     <p class="menu-price">${menu.prix}€ <span>/ pers.</span></p>
+      <p class="menu-persons">Min <strong>${menu.personne_min} personne</strong></p>
+    </div>
+    <a href="menu-detail.html" class="btn-detail">Voir le menu</a>
+    </div>
+    `;
+    grid.appendChild(carte);
+  });
+  if (countEl) countEl.textContent = menus.length;
+}
 
 /* ── FILTRES MENUS (menus.html) ── */
 function initFiltres() {
-  const grid = document.getElementById('menuGrid');
+  const grid= document.getElementById('menuGrid');
   if (!grid) return;
-
-  let activeTheme  = 'tous';
+  let tousLesMenus=[];
+  let activeTheme = 'tous';
   let activeRegime = 'tous';
+  fetch ('menus.json')
+  .then(response =>response.json())
+  .then(data=>{tousLesMenus=data; 
+    afficherMenus(data);})
+  .catch(error => {console.error('Erreur chargement menus:', error)});
 
   // Thème
   document.querySelectorAll('#filter-theme .filter-btn').forEach(btn => {

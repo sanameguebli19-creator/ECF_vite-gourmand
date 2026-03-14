@@ -71,8 +71,10 @@
     }
     .img-noel    { background: linear-gradient(135deg, #1a3a1a, #2d5c2d); }
     .img-paques  { background: linear-gradient(135deg, #7ab648, #4a9c2f); }
-    .img-classic { background: linear-gradient(135deg, #c4571a, #e07040); }
-    .img-event   { background: linear-gradient(135deg, #d4a84b, #a07020); }
+    .img-classique { background: linear-gradient(135deg, #c4571a, #e07040); }
+    .img-evenement   { background: linear-gradient(135deg, #d4a84b, #a07020); }
+    .img-vegetarien { background: linear-gradient(135deg, #7ab648, #4a9c2f); }
+    .img-vegan { background: linear-gradient(135deg, #3a5a2e, #3a5a2e); }
 
     .menu-badge {
       position: absolute; top: .8rem; right: .8rem;
@@ -164,91 +166,7 @@
     <p class="results-count">Affichage de <strong id="count">6</strong> menu(s)</p>
     <div class="menu-grid" id="menuGrid">
 
-      <div class="menu-card" data-theme="noel" data-regime="classique" data-prix="65" data-personnes="8">
-        <div class="menu-card-img img-noel">🎄<span class="menu-badge">Noël</span></div>
-        <div class="menu-card-body">
-          <div class="menu-theme">Thème Noël</div>
-          <div class="menu-card-title">Le Grand Festin de Noël</div>
-          <div class="menu-desc">Foie gras, dinde rôtie aux marrons, bûche maison… Un menu festif pour sublimer vos réveillons.</div>
-          <div class="menu-tags"><span class="menu-tag">🥗 Entrée</span><span class="menu-tag">🍖 Plat</span><span class="menu-tag">🎂 Dessert</span></div>
-          <div class="menu-footer">
-            <div><div class="menu-price">65€ <span>/ pers.</span></div><div class="menu-persons">Min. <strong>8 personnes</strong></div><div class="menu-stock">⚡ 3 commandes restantes</div></div>
-            <a href="menu-detail.html" class="btn-detail">Voir →</a>
-          </div>
-        </div>
       </div>
-
-      <div class="menu-card" data-theme="paques" data-regime="classique" data-prix="48" data-personnes="6">
-        <div class="menu-card-img img-paques">🐣<span class="menu-badge">Pâques</span></div>
-        <div class="menu-card-body">
-          <div class="menu-theme">Thème Pâques</div>
-          <div class="menu-card-title">Table de Pâques Printanière</div>
-          <div class="menu-desc">Agneau de lait, légumes de saison, desserts chocolatés… La promesse d'un repas tout en fraîcheur.</div>
-          <div class="menu-tags"><span class="menu-tag">🥗 Entrée</span><span class="menu-tag">🍖 Plat</span><span class="menu-tag">🍫 Dessert</span></div>
-          <div class="menu-footer">
-            <div><div class="menu-price">48€ <span>/ pers.</span></div><div class="menu-persons">Min. <strong>6 personnes</strong></div></div>
-            <a href="menu-detail.html" class="btn-detail">Voir →</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="menu-card" data-theme="classique" data-regime="classique" data-prix="38" data-personnes="4">
-        <div class="menu-card-img img-classic">🍽️<span class="menu-badge">Classique</span></div>
-        <div class="menu-card-body">
-          <div class="menu-theme">Classique</div>
-          <div class="menu-card-title">Menu Classique Bordeaux</div>
-          <div class="menu-desc">Entrée, plat et dessert revisités avec les saveurs du terroir bordelais. Idéal pour tous vos événements.</div>
-          <div class="menu-tags"><span class="menu-tag">🥗 Entrée</span><span class="menu-tag">🍷 Plat</span><span class="menu-tag">🍮 Dessert</span></div>
-          <div class="menu-footer">
-            <div><div class="menu-price">38€ <span>/ pers.</span></div><div class="menu-persons">Min. <strong>4 personnes</strong></div></div>
-           <a href="menu-detail.html" class="btn-detail">Voir →</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="menu-card" data-theme="classique" data-regime="vegan" data-prix="35" data-personnes="4">
-        <div class="menu-card-img img-classic">🌱<span class="menu-badge badge-vegan">Vegan</span></div>
-        <div class="menu-card-body">
-          <div class="menu-theme">Classique • Vegan</div>
-          <div class="menu-card-title">Menu Vegan Saveurs du Monde</div>
-          <div class="menu-desc">100% végétal et gourmand, avec des ingrédients bio et locaux pour une expérience culinaire éthique.</div>
-          <div class="menu-tags"><span class="menu-tag">🥗 Entrée</span><span class="menu-tag">🍲 Plat</span><span class="menu-tag">🍓 Dessert</span></div>
-          <div class="menu-footer">
-            <div><div class="menu-price">35€ <span>/ pers.</span></div><div class="menu-persons">Min. <strong>4 personnes</strong></div></div>
-            <a href="menu-detail.html" class="btn-detail">Voir →</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="menu-card" data-theme="evenement" data-regime="classique" data-prix="75" data-personnes="20">
-        <div class="menu-card-img img-event">🎉<span class="menu-badge">Événement</span></div>
-        <div class="menu-card-body">
-          <div class="menu-theme">Événement</div>
-          <div class="menu-card-title">Cocktail Dinatoire Prestige</div>
-          <div class="menu-desc">Buffet raffiné pour vos soirées d'entreprise, mariages ou anniversaires. Service inclus.</div>
-          <div class="menu-tags"><span class="menu-tag">🥂 Cocktail</span><span class="menu-tag">🍢 Petits fours</span><span class="menu-tag">🎂 Dessert</span></div>
-          <div class="menu-footer">
-            <div><div class="menu-price">75€ <span>/ pers.</span></div><div class="menu-persons">Min. <strong>20 personnes</strong></div></div>
-            <a href="menu-detail.html" class="btn-detail">Voir →</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="menu-card" data-theme="paques" data-regime="vegetarien" data-prix="42" data-personnes="6">
-        <div class="menu-card-img img-paques">🌿<span class="menu-badge badge-vege">Végétarien</span></div>
-        <div class="menu-card-body">
-          <div class="menu-theme">Pâques • Végétarien</div>
-          <div class="menu-card-title">Pâques Végétarienne en Fête</div>
-          <div class="menu-desc">Tarte tatin d'asperges, risotto aux champignons, œufs en chocolat artisanaux.</div>
-          <div class="menu-tags"><span class="menu-tag">🥗 Entrée</span><span class="menu-tag">🍝 Plat</span><span class="menu-tag">🍫 Dessert</span></div>
-          <div class="menu-footer">
-            <div><div class="menu-price">42€ <span>/ pers.</span></div><div class="menu-persons">Min. <strong>6 personnes</strong></div></div>
-           <a href="menu-detail.html" class="btn-detail">Voir →</a>
-          </div>
-        </div>
-      </div>
-
-    </div>
     <div class="no-results" id="noResults">
       <div class="no-results-icon">🔍</div>
       <p>Aucun menu ne correspond à vos critères.<br>Essayez d'élargir vos filtres.</p>

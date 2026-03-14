@@ -2,7 +2,7 @@
     {
         "id":1,
         "titre":"Le Grand Festin de noel",
-        "theme":"Noel",
+        "theme":"noel",
         "regime":"classique",
         "prix":65,
         "personne_min":8,
@@ -31,7 +31,7 @@
 {
     "id":4,
     "titre":"Menu vegan saveur de monde",
-    "theme":"classique",
+    "theme":"vegan",
     "regime":"vegan",
     "prix":35,
     "personne_min":4,
@@ -51,7 +51,7 @@
        {
         "id":6,
         "titre":"Paques végétarienne en fete",
-        "theme":"paques",
+        "theme":"vegetarien",
         "regime":"vegetarien",
         "prix":42,
         "personne_min":6,
