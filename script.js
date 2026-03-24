@@ -507,8 +507,43 @@ if (!ctx) return;
       }
     }
   });
+
+//graphique CA section-ca
+const ctx2 = document.getElementById('chartCA2');
+if (ctx2) {
+  new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels: ['semaine1', 'semaine2', 'semaine3', 'semaine4'],
+      datasets: [{
+        label: 'CA (€)',
+        data: [1200, 2800, 4200, 4200],
+        backgroundColor:[
+          'rgba(196, 87, 26, 0.7)',
+          'rgba(196, 87, 26, 0.7)',
+          'rgba(212, 168, 75, 0.9)',
+          'rgba(212, 168, 75, 0.9)'
+        ], 
+        borderRadius: 8
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            callback: value => value/1000 + 'k€'
+          }
+        }
+      }
+    }
+  });
 }
-       
+}
 
 function initEspaceAdmin() {
   if (!document.querySelector('.donut-chart')) return;
