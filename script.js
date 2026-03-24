@@ -469,6 +469,47 @@ function initEspaceEmploye() {
 }
 
 /* ── ESPACE ADMIN ── */
+function initCharts() {
+  const ctx = document.getElementById('chartCA');
+if (!ctx) return;
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin','Déc'],
+      datasets: [{
+        label: 'CA mensuel (€)',
+        data: [4200, 5800, 3900, 6100, 7300, 5500, 12400],
+        backgroundColor: [
+          'rgba(197, 86, 26, 0.7)',
+          'rgba(197, 86, 26, 0.7)',
+          'rgba(197, 86, 26, 0.7)',
+          'rgba(197, 86, 26, 0.7)',
+          'rgba(197, 86, 26, 0.7)',
+          'rgba(197, 86, 26, 0.7)',
+          'rgba(212, 168, 75, 0.9)'
+          ],
+        borderRadius: 8
+}]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            callback: value => value/1000 + 'k€'
+          }
+        }
+      }
+    }
+  });
+}
+       
+
 function initEspaceAdmin() {
   if (!document.querySelector('.donut-chart')) return;
 
@@ -492,8 +533,10 @@ function initEspaceAdmin() {
     });
   });
 }
+
 document.addEventListener('DOMContentLoaded', () => {
   initScrollReveal();
+  initCharts();
   initFiltres();
   initAuth();
   initMenuDetail();

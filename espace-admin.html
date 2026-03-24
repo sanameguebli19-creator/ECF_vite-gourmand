@@ -168,15 +168,7 @@
         <div class="charts-grid">
           <div class="chart-card">
             <div class="chart-title">CA mensuel <select class="chart-filter"><option>2026</option><option>2025</option></select></div>
-            <div class="bar-chart">
-              <div class="bar-wrap"><div class="bar-val">4.2k</div><div class="bar" style="height:55%; background:linear-gradient(180deg,var(--terracotta),var(--gold));"></div><div class="bar-label">Jan</div></div>
-              <div class="bar-wrap"><div class="bar-val">5.8k</div><div class="bar" style="height:74%; background:linear-gradient(180deg,var(--terracotta),var(--gold));"></div><div class="bar-label">Fév</div></div>
-              <div class="bar-wrap"><div class="bar-val">3.9k</div><div class="bar" style="height:50%; background:linear-gradient(180deg,var(--terracotta),var(--gold));"></div><div class="bar-label">Mar</div></div>
-              <div class="bar-wrap"><div class="bar-val">6.1k</div><div class="bar" style="height:78%; background:linear-gradient(180deg,var(--terracotta),var(--gold));"></div><div class="bar-label">Avr</div></div>
-              <div class="bar-wrap"><div class="bar-val">7.3k</div><div class="bar" style="height:93%; background:linear-gradient(180deg,var(--terracotta),var(--gold));"></div><div class="bar-label">Mai</div></div>
-              <div class="bar-wrap"><div class="bar-val">5.5k</div><div class="bar" style="height:70%; background:linear-gradient(180deg,var(--terracotta),var(--gold));"></div><div class="bar-label">Jun</div></div>
-              <div class="bar-wrap"><div class="bar-val">12.4k</div><div class="bar" style="height:100%; background:linear-gradient(180deg,var(--gold),var(--terracotta));"></div><div class="bar-label">Déc</div></div>
-            </div>
+            <canvas id="chartCA" height="160"></canvas>
           </div>
           <div class="chart-card">
             <div class="chart-title">Répartition par thème</div>
@@ -273,7 +265,7 @@
 
     </main>
   </div>
-
+<script <source src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
