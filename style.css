@@ -33,7 +33,7 @@ nav {
   align-items: center;
   justify-content: space-between;
   padding: 1.2rem 4rem;
-  background: var(--cream);
+  background: var(--dark);
   border-bottom: 1px solid rgba(196,87,26,0.12);
   box-shadow: 0 2px 24px rgba(92,61,30,0.07);
 }
@@ -57,7 +57,7 @@ nav {
 .nav-links a {
   font-size: .9rem;
   font-weight: 500;
-  color: var(--text-light);
+  color: var(--cream);
   text-decoration: none;
   letter-spacing: .03em;
   transition: color .2s;

@@ -55,23 +55,24 @@
     .stat-label { font-size: .8rem; color: var(--text-light); margin-top: .1rem; }
 
     .hero-visual { position: relative; animation: fadeIn .9s .2s ease both; }
-    .hero-img-wrap {
-      border-radius: 40% 60% 55% 45% / 45% 40% 60% 55%;
-      overflow: hidden; aspect-ratio: 1;
-      max-width: 520px; margin: 0 auto;
-      background: linear-gradient(135deg, var(--gold-light) 0%, var(--terracotta) 100%);
-      box-shadow: 0 30px 80px rgba(92,61,30,0.25);
-    }
-    .hero-blob-inner { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 10rem; }
+   .hero-img-wrap { 
+    width: 100%; max-width: 600px; margin-left: auto;
+     border-radius: 40px; 
+     overflow: hidden;
+   }
+   .hero-img-wrap img {
+    height: 80vh; 
+    object-fit: cover.
+    ;
+    width: 100%; height: auto; 
+    display: block; 
+    object-fit: cover; }
     
-   
     .card-icon { font-size: 1.8rem; }
     .card-title { font-weight: 600; font-size: .85rem; color: var(--dark); }
     .card-sub { font-size: .75rem; color: var(--text-light); }
-    .deco-circle { position: absolute; border-radius: 50%; pointer-events: none; }
-    .deco-1 { width: 300px; height: 300px; background: radial-gradient(circle, rgba(212,168,75,0.15) 0%, transparent 70%); top: -80px; right: -80px; }
-    .deco-2 { width: 200px; height: 200px; background: radial-gradient(circle, rgba(196,87,26,0.08) 0%, transparent 70%); bottom: 20px; left: 0; }
-
+   
+   
     /* --- À PROPOS --- */
     .section { padding: 6rem 4rem; }
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
@@ -122,10 +123,10 @@
 <body>
 
   <nav>
-    <a href="index.html" class="nav-logo-wrap">
+  
       <span class="nav-logo"><span class="logo-vite">Vite</span><span class="logo-et">&amp;</span><span class="logo-gour">Gourmand</span></span>
-      <span class="nav-logo-sub">Traiteur • Bordeaux</span>
-    </a>
+    
+    
     <ul class="nav-links">
       <li><a href="index.html" class="active">Accueil</a></li>
       <li><a href="menus.html">Nos Menus</a></li>
@@ -152,12 +153,13 @@
         <div><div class="stat-num">4.9★</div><div class="stat-label">Note moyenne</div></div>
       </div>
     </div>
-    <div class="hero-visual">
-      <div class="deco-circle deco-1"></div>
-      <div class="deco-circle deco-2"></div>
-      <div class="hero-img-wrap"><div class="hero-blob-inner">🍱</div></div>
+    
+      <div class="hero-img-wrap"><img src="images/img1.jpg" alt=""> </div>
+
+      
+      
      
-    </div>
+    
   </section>
 
   <section class="section" id="about">
