@@ -15,7 +15,7 @@ Elle propose divers menus gastronomiques qui s'adaptent à tous les goûts et to
 -MySql,PHPMyAdmin,MongoDB
 
 **Outils:
--GitHub,Figma,Drow.io,Visual Studio Code
+-GitHub,Figma,Drow.io,Visual Studio Code,XAMPP
 
 ## Fonctionnalités:
 **Clients:
