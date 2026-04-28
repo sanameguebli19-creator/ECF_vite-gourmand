@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commande – Vite & Gourmand</title>
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=DM+Sans&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'DM Sans', sans-serif;
+  background: #f7f7f7;
+}
+
+/* HEADER */
+.page-header {
+  background: #111;
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* CONTAINER */
+.container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+
+/* FORM */
+.form-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-family: 'DM Sans';
+}
+
+textarea {
+  resize: none;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* BUTTON */
+.btn {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 50px;
+  background: #c4571a;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn:hover {
+  background: #a94415;
+}
+
+/* SUCCESS */
+.success {
+  display: none;
+  text-align: center;
+  color: green;
+  margin-top: 1rem;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+  <nav>
+  
+      <img src="images/Vite &.png" alt="" class="logo">
+      <div class="menu-toggle" onclick="toggleMenu()">
+  ☰
+</div>
+    
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Accueil</a></li>
+      <li><a href="menus.html">Nos Menus</a></li>
+      <li><a href="#about">À Propos</a></li>
+      <li><a href="#avis">Avis</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="connexion.html" class="nav-cta">Se connecter</a></li>
+    <li><a href="espace-utilisateur.html" class="nav-cta" style="background:transparent; border:1px solid var(--terracotta); color:var(--terracotta);">👤 Espace personnel</a></li>
+    </ul>
+  </nav>
+
+
+<div class="page-header">
+  <h1>Passer une commande</h1>
+  <p>Réservez votre menu en quelques étapes</p>
+</div>
+
+<div class="container">
+<div class="form-card">
+  <form id="commandeForm">
+
+  <div class="grid">
+    <div class="form-group">
+    <label>Nom</label>
+   <input type="text" id="nom" required>
+  </div>
+
+  <div class="form-group">
+   <label>Email</label>
+   <input type="email" id="email" required>
+    </div>
+   </div>
+
+    <div class="grid">
+    <div class="form-group">
+    <label>Téléphone</label>
+     <input type="tel" id="tel" required>
+     </div>
+
+     <div class="form-group">
+    <label>Date de livraison</label>
+    <input type="date" id="date" required>
+     </div>
+    </div>
+
+  <div class="form-group">
+ <label>Menu choisi</label>
+<select id="menu">
+          <option>Menu Noël</option>
+          <option>Menu Classique</option>
+          <option>Menu Végétarien</option>
+          <option>Menu Vegan</option>
+        </select>
+      </div>
+
+      <div class="grid">
+        <div class="form-group">
+          <label>Nombre de personnes</label>
+          <input type="number" id="personnes" min="1" required>
+        </div>
+
+        <div class="form-group">
+          <label>Adresse de livraison</label>
+          <input type="text" id="adresse" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Message / Allergies</label>
+        <textarea rows="4"></textarea>
+      </div>
+     
+
+      <button type="submit" class="btn"  onclick="envoyerCommande()">Valider la commande</button>
+
+      <div class="success" id="successMsg">
+        ✅ Commande envoyée avec succès !
+      </div>
+
+    </form>
+  </div>
+
+</div>
+<footer id="contact">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo"><span class="logo-vite">Vite</span><span class="logo-et">&amp;</span><span class="logo-gour">Gourmand</span></div>
+          <span class="footer-logo-sub">Traiteur • Bordeaux</span>
+          <p class="footer-desc">Traiteur bordelais depuis 25 ans. Nous livrons vos événements avec passion et savoir-faire, pour des moments inoubliables à table.</p>
+          <div class="footer-contact-item"><span>📍</span><span>Bordeaux, France</span></div>
+          <div class="footer-contact-item"><span>📧</span><span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1e7d71706a7f7d6a5e68776a7b79716b6c737f707a30786c">vite&gourmand@gmail.com</a></span></div>
+        </div>
+       
+        <div>
+          <div class="footer-title">Horaires d'ouverture</div>
+          <div class="footer-horaires">
+            <div class="horaire-row"><span class="horaire-day">Lundi</span><span class="horaire-time">9h – 18h</span></div>
+            <div class="horaire-row"><span class="horaire-day">Mardi</span><span class="horaire-time">9h – 18h</span></div>
+            <div class="horaire-row"><span class="horaire-day">Mercredi</span><span class="horaire-time">9h – 18h</span></div>
+            <div class="horaire-row"><span class="horaire-day">Jeudi</span><span class="horaire-time">9h – 18h</span></div>
+            <div class="horaire-row"><span class="horaire-day">Vendredi</span><span class="horaire-time">9h – 17h</span></div>
+            <div class="horaire-row"><span class="horaire-day">Samedi</span><span class="horaire-time">10h – 15h</span></div>
+            <div class="horaire-row fermé"><span class="horaire-day">Dimanche</span><span class="horaire-time">Fermé</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Vite & Gourmand. Tous droits réservés.</span>
+      <div class="footer-legal">
+        <a href="#">Mentions légales</a>
+        <a href="#">CGV</a>
+        <a href="#">RGPD</a>
+      </div>
+    </div>
+  </footer>
+
+<script>
+document.getElementById("commandeForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const data = {
+    nom: document.getElementById("nom").value,
+    email: document.getElementById("email").value,
+    menu: document.getElementById("menu-select").value,
+    quantite: document.getElementById("qty").value
+  };
+
+  fetch("backend/commande.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  })
+  .then(res => res.json())
+  .then(response => {
+    if(response.success){
+      alert("✅ Commande envoyée !");
+    } else {
+      alert("❌ Erreur : " + response.message);
+    }
+  })
+  .catch(() => {
+    alert("Erreur serveur");
+  });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nos Menus</title>
+ <link rel="stylesheet" href="style.css"/>
+<style>
+:root {
+  --primary: #c4571a;
+  --dark: #3b1f0f;
+  --bg: #f6f4f2;
+}
+
+body {
+  margin: 0;
+  font-family: 'Arial';
+  background: var(--bg);
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(90deg, #3b1f0f, #8b5a2b);
+  color: white;
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.hero h1 {
+  margin: 0;
+}
+
+/* FILTRES */
+.filters {
+  background: white;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  
+}
+
+.filter-btn {
+  padding: 8px 15px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.filter-btn.active {
+  background: var(--primary);
+  color: white;
+}
+
+/* INPUTS */
+.filters input {
+  padding: 6px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+/* INFO */
+.info {
+  padding: 10px 20px;
+}
+
+/* GRID */
+.menu-grid {
+  display: grid;
+  grid-template-columns: 
+  gap: 20px;
+  padding: 20px;
+  margin-bottom: 50px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+}
+
+
+.card-top {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  background:#e07040; 
+}
+.card-body {
+  padding: 18px;
+}
+.card-body h3 {
+  margin: 0 0 5px;
+}
+
+.card-body p {
+  margin: 4px 0;
+  color: #666;
+}
+
+/* Prix */
+.price {
+  color: #c4571a;
+  font-weight: bold;
+  margin-top: 10px;
+}
+/* footer carte */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+
+/* bouton moderne */
+.btn {
+  padding: 8px 14px;
+  background: #c4571a;
+  color: white;
+  border-radius: 25px;
+  font-size: 13px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #a63f10;
+  transform: translateY(-2px);
+}
+
+/* texte */
+.persons {
+  font-size: 13px;
+  color: #777;
+}
+/* Bouton */
+.btn {
+  margin-top: 10px;
+  display: inline-block;
+  padding: 6px 12px;
+  background: #c4571a;
+  color: white;
+  border-radius: 20px;
+  font-size: 13px;
+  text-decoration: none;
+}
+.btn {
+  box-shadow: 0 4px 10px rgba(196,87,26,0.3);
+}
+
+/* EMPTY */
+.empty {
+  text-align: center;
+  padding: 40px;
+  display: none;
+}
+</style>
+</head>
+
+
+  <nav>
+  
+      <img src="images/Vite &.png" alt="" class="logo">
+
+      <div class="menu-toggle" onclick="toggleMenu()"> ☰ </div>
+    
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Accueil</a></li>
+      <li><a href="menus.html">Nos Menus</a></li>
+      <li><a href="#about">À Propos</a></li>
+      <li><a href="#avis">Avis</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="connexion.html" class="nav-cta">Se connecter</a></li>
+    <li><a href="espace-utilisateur.html" class="nav-cta" style="background:transparent; border:1px solid var(--terracotta); color:var(--terracotta);">👤 Espace personnel</a></li>
+    </ul>
+  </nav>
+
+
+<div class="hero">
+  <h1>Tous nos menus</h1>
+  <p>Choisissez selon vos envies</p>
+</div>
+
+<div class="filters">
+  
+  <!-- Thème -->
+  <button class="filter-btn active" onclick="setTheme('all', this)">Tous</button>
+  <button class="filter-btn" onclick="setTheme('noel', this)">🎄 Noël</button>
+  <button class="filter-btn" onclick="setTheme('classique', this)">🍽️ Classique</button>
+
+  <!-- Régime -->
+  <button class="filter-btn" onclick="setRegime('vegetarien', this)">🌿 Végétarien</button>
+  <button class="filter-btn" onclick="setRegime('vegan', this)">🌱 Vegan</button>
+
+  <!-- Inputs -->
+  Prix max :
+  <input type="number" id="prix" placeholder="ex 60£">
+
+  Pers min :
+  <input type="number" id="pers" placeholder="ex 4">
+
+</div>
+
+<div class="info">
+  <span id="count"></span>
+</div>
+<div class="menu-grid">
+<div class="card noel" data-theme="noel" data-regime="classique" data-prix="65" data-pers="8">
+    <div class="card-top">🎄</div>
+    <div class="card-body">
+      <h3>Menu Noël</h3>
+      <p>Repas de fête</p>
+      <p class="price">65€ / pers</p>
+      <p>Min 8 pers</p>
+      <a href="menu-detail.html" class="btn">Voir détails</a>
+    </div>
+  </div>
+/
+ <div class="card classique" data-theme="classique" data-regime="classique" data-prix="42" data-pers="5">
+    <div class="card-top">🍽️</div>
+    <div class="card-body">
+      <h3>Menu Tradition</h3>
+      <p>Cuisine française</p>
+      <p class="price">42€ / pers</p>
+      <p>Min 5 pers</p>
+      <a href="menu-detail.html" class="btn">Voir détails</a>
+    </div>
+  </div>
+<div class="card vegetarien" data-theme="classique" data-regime="vegetarien" data-prix="38" data-pers="4">
+    <div class="card-top">🌿</div>
+    <div class="card-body">
+      <h3>Menu Végétarien</h3>
+      <p>Saveurs naturelles</p>
+      <p class="price">38€ / pers</p>
+      <p>Min 4 pers</p>
+      <a href="menu-detail.html" class="btn">Voir détails</a>
+    </div>
+  </div>
+ <div class="card vegan" data-theme="classique" data-regime="vegan" data-prix="35" data-pers="4">
+    <div class="card-top">🌱</div>
+    <div class="card-body">
+      <h3>Menu Vegan</h3>
+      <p>100% végétal</p>
+      <p class="price">35€ / pers</p>
+      <p>Min 4 pers</p>
+      <a href="menu-detail.html" class="btn">Voir détails</a>
+    </div>
+  </div>
+
+</div>
+
+<div class="empty" id="empty">
+  🔍 Aucun menu trouvé
+</div>
+
+<script>
+let theme = "all";
+let regime = "all";
+
+function setTheme(t, btn) {
+  theme = t;
+  updateActive(btn);
+  filter();
+}
+
+function setRegime(r, btn) {
+  regime = r;
+  updateActive(btn);
+  filter();
+}
+
+function updateActive(btn) {
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+}
+
+document.getElementById("prix").addEventListener("input", filter);
+document.getElementById("pers").addEventListener("input", filter);
+
+function filter() {
+  let cards = document.querySelectorAll(".card");
+  let maxPrix = document.getElementById("prix").value || Infinity;
+  let minPers = document.getElementById("pers").value || 0;
+
+  let count = 0;
+
+  cards.forEach(card => {
+    let ok =
+      (theme === "all" || card.dataset.theme === theme) &&
+      (regime === "all" || card.dataset.regime === regime) &&
+      card.dataset.prix <= maxPrix &&
+      card.dataset.pers >= minPers;
+
+    card.style.display = ok ? "block" : "none";
+    if (ok) count++;
+  });
+
+  document.getElementById("count").innerText = count + " menus";
+  document.getElementById("empty").style.display = count === 0 ? "block" : "none";
+}
+
+filter();
+</script>
+<footer id="contact">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo"><span class="logo-vite">Vite</span><span class="logo-et">&amp;</span><span class="logo-gour">Gourmand</span></div>
+          <span class="footer-logo-sub">Traiteur • Bordeaux</span>
+          <p class="footer-desc">Traiteur bordelais depuis 25 ans. Nous livrons vos événements avec passion et savoir-faire, pour des moments inoubliables à table.</p>
+          <div class="footer-contact-item"><span>📍</span><span>Bordeaux, France</span></div>
+          <div class="footer-contact-item"><span>📧</span><span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1e7d71706a7f7d6a5e68776a7b79716b6c737f707a30786c">vite&gourmand@gmail.com</a></span></div>
+        </div>
+       
+        <div>
+          <div class="footer-title">Horaires d'ouverture</div>
+          <div class="footer-horaires">
+            <div class="horaire-row"><span class="horaire-day">Lundi</span><span class="horaire-time">9h – 18h</span></div>
+            <div class="horaire-row"><span class="horaire-day">Mardi</span><span class="horaire-time">9h – 18h</span></div>
+            <div class="horaire-row"><span class="horaire-day">Mercredi</span><span class="horaire-time">9h – 18h</span></div>
+            <div class="horaire-row"><span class="horaire-day">Jeudi</span><span class="horaire-time">9h – 18h</span></div>
+            <div class="horaire-row"><span class="horaire-day">Vendredi</span><span class="horaire-time">9h – 17h</span></div>
+            <div class="horaire-row"><span class="horaire-day">Samedi</span><span class="horaire-time">10h – 15h</span></div>
+            <div class="horaire-row fermé"><span class="horaire-day">Dimanche</span><span class="horaire-time">Fermé</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Vite & Gourmand. Tous droits réservés.</span>
+      <div class="footer-legal">
+        <a href="#">Mentions légales</a>
+        <a href="#">CGV</a>
+        <a href="#">RGPD</a>
+      </div>
+    </div>
+  </footer>
+<script src="script.js"></script>
+
+
+</body>
+</html>

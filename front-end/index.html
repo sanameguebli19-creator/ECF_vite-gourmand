@@ -9,25 +9,20 @@
   <style>
     /* --- HERO --- */
     .hero {
-      min-height: 90vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--text);
       align-items: center;
-      padding: 4rem;
-      gap: 4rem;
-      position: relative;
-      overflow: hidden;
+      padding:20px;
+      
     }
-    .hero::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse 70% 70% at 80% 50%, rgba(212,168,75,0.08) 0%, transparent 70%);
-      pointer-events: none;
-    }
+    
     .hero-badge {
+      
       display: inline-flex; align-items: center; gap: .5rem;
-      background: rgba(196,87,26,0.08);
-      border: 1px solid rgba(196,87,26,0.2);
+      background: var(--Brown);
+      border: 1px solid var(--text-light);
       color: var(--terracotta);
       font-size: .8rem; font-weight: 500;
       padding: .4rem 1rem; border-radius: 50px;
@@ -38,65 +33,83 @@
     .hero-title {
       font-family: 'Playfair Display', serif;
       font-size: clamp(2.8rem, 5vw, 4.5rem);
-      line-height: 1.1; color: var(--dark);
+      line-height: 1.1;
+       color: var(--warm-white);
       margin-bottom: 1.5rem;
       animation: fadeUp .7s .1s ease both;
     }
-    .hero-title em { font-style: italic; color: var(--terracotta); display: block; }
+    .hero-title em { font-style: italic; color: var(--gold-light); display: block; }
     .hero-desc {
       font-size: 1.05rem; line-height: 1.7;
-      color: var(--text-light); max-width: 480px;
+      color: var(--cream); max-width: 480px;
       margin-bottom: 2.5rem;
       animation: fadeUp .7s .2s ease both;
+     
     }
-    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp .7s .3s ease both; }
+    .hero-actions { display: flex; gap: 1rem;
+       flex-wrap: wrap;
+       color: var(--gold);
+        animation: fadeUp .7s .3s ease both; }
+    .hero-actions.btn-primary{
+      border: 1px solid var(--text-light);
+      border-radius: 20px;
+
+      border-color: var(--cream);
+    }
+    .hero-actions.btn-secondary{
+       border: 1px solid var(--cream);
+      border-radius: 20px;
+     }
+
+    
     .hero-stats { display: flex; gap: 2.5rem; margin-top: 3rem; animation: fadeUp .7s .4s ease both; }
     .stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--terracotta); }
     .stat-label { font-size: .8rem; color: var(--text-light); margin-top: .1rem; }
-
-    .hero-visual { position: relative; animation: fadeIn .9s .2s ease both; }
-   .hero-img-wrap { 
-    width: 100%; max-width: 600px; margin-left: auto;
-     border-radius: 40px; 
-     overflow: hidden;
-   }
-   .hero-img-wrap img {
-    height: 80vh; 
-    object-fit: cover.
-    ;
-    width: 100%; height: auto; 
-    display: block; 
-    object-fit: cover; }
-    
-    .card-icon { font-size: 1.8rem; }
-    .card-title { font-weight: 600; font-size: .85rem; color: var(--dark); }
-    .card-sub { font-size: .75rem; color: var(--text-light); }
-   
-   
-    /* --- À PROPOS --- */
-    .section { padding: 6rem 4rem; }
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
-    .about-text p { font-size: 1.02rem; line-height: 1.8; color: var(--text-light); margin-bottom: 1.2rem; }
-    .team-cards { display: flex; flex-direction: column; gap: 1.2rem; }
-    .team-card {
-      background: #fff; border-radius: 20px; padding: 1.5rem;
-      display: flex; align-items: center; gap: 1.2rem;
-      box-shadow: 0 4px 20px rgba(92,61,30,0.08);
-      border: 1px solid rgba(212,168,75,0.15);
-      transition: transform .25s, box-shadow .25s;
+    .section.about-img{
+      align-items: center;
     }
-    .team-card:hover { transform: translateX(6px); box-shadow: 0 8px 32px rgba(92,61,30,0.14); }
-    .team-avatar { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; flex-shrink: 0; }
-    .avatar-julie { background: linear-gradient(135deg, #f9d29d, #e07040); }
-    .avatar-jose  { background: linear-gradient(135deg, #a8d8a0, #3a5a2e); }
-    .team-info h3 { font-weight: 600; font-size: .95rem; color: var(--dark); }
-    .team-info p  { font-size: .82rem; color: var(--text-light); margin-top: .2rem; }
-    .team-tag { margin-top: .5rem; font-size: .72rem; font-weight: 500; color: var(--terracotta); background: rgba(196,87,26,0.08); padding: .2rem .6rem; border-radius: 50px; display: inline-block; }
 
+ /* --- À PROPOS --- */
+   
+   .about-grid {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  padding: 0 4rem;
+}
+.about-text h2 {
+  margin-bottom: 1.5rem; /* espace entre le titre et le paragraphe */
+  color:var(--text-light);
+      font-size: 2rem;
+      font-style: italic;
+}
+
+.about-text {
+
+  flex: 1; /* ← prend tout l'espace disponible à gauche */
+  line-height: 1.5rem;
+  
+}
+
+.about-img {
+  padding-top: 70px;
+  width: 45%;
+  border-radius: 16px;
+  object-fit: cover;
+  height: 400px;  /* ← hauteur fixe pour un beau rendu */
+}
     /* --- AVIS --- */
     .avis-section { background: var(--warm-white); padding: 6rem 4rem; }
-    .avis-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3rem; }
-    .avis-card { background: #fff; border-radius: 20px; padding: 1.8rem; box-shadow: 0 4px 20px rgba(92,61,30,0.07); border: 1px solid rgba(212,168,75,0.12); transition: transform .25s ease; }
+    .avis-section h2{
+      color:var(--text-light);
+      font-size: 2.5rem;
+      font-style: italic;
+    }
+    .avis-grid { display: grid;
+       grid-template-columns: repeat(3,1fr);
+        gap: 1.5rem; margin-top: 3rem; }
+    .avis-card { background: #fff; border-radius: 
+      20px; padding: 1.8rem; box-shadow: 0 4px 20px rgba(92,61,30,0.07); border: 1px solid rgba(212,168,75,0.12); transition: transform .25s ease; }
     .avis-card:hover { transform: translateY(-4px); }
     .stars { color: var(--gold); font-size: 1rem; margin-bottom: 1rem; }
     .avis-text { font-size: .92rem; line-height: 1.7; color: var(--text-light); font-style: italic; margin-bottom: 1.2rem; }
@@ -124,8 +137,7 @@
 
   <nav>
   
-      <span class="nav-logo"><span class="logo-vite">Vite</span><span class="logo-et">&amp;</span><span class="logo-gour">Gourmand</span></span>
-    
+      <img src="images/Vite &.png" alt="" class="logo">
     
     <ul class="nav-links">
       <li><a href="index.html" class="active">Accueil</a></li>
@@ -139,65 +151,62 @@
   </nav>
 
   <section class="hero">
-    <div class="hero-content">
+   
       <div class="hero-badge">Traiteur à Bordeaux depuis 25 ans</div>
-      <h1 class="hero-title">La gastronomie,<br><em>livrée chez vous.</em></h1>
-      <p class="hero-desc">Vite & Gourmand sublime chaque événement avec des menus raffinés, préparés avec passion par Julie et José. Noël, Pâques, repas d'entreprise… nous avons le menu qu'il vous faut.</p>
+
+      <h1 class="hero-title">La cuisine du coeur,<br><em>livrée chez vous.</em></h1>
+      <p class="hero-desc">Julie et José mettent leur passion dans chaque assiette.Des menus de saison préparés avec des produits locaux,pour vos moments les plus précieux.</p>
       <div class="hero-actions">
-        <a href="menus.html" class="btn-primary">🍽️ Découvrir nos menus</a>
-        <a href="#contact" class="btn-secondary">📞 Nous contacter</a>
+        <a href="menus.html" class="btn-primary">Découvrir nos menus</a>
+        <a href="#contact" class="btn-secondary">Nous contacter</a>
       </div>
       <div class="hero-stats">
-        <div><div class="stat-num">25+</div><div class="stat-label">Ans d'expérience</div></div>
+        <div><div class="stat-num">25+</div>
+        
+        <div class="stat-label">Ans d'expérience</div></div>
         <div><div class="stat-num">500+</div><div class="stat-label">Événements réalisés</div></div>
         <div><div class="stat-num">4.9★</div><div class="stat-label">Note moyenne</div></div>
       </div>
     </div>
     
-      <div class="hero-img-wrap"><img src="images/img1.jpg" alt=""> </div>
+      </section>
 
-      
-      
-     
-    
-  </section>
 
-  <section class="section" id="about">
-    <div class="about-grid">
-      <div class="about-text">
-        <div class="section-label">Notre histoire</div>
-        <h2 class="section-title">Une passion familiale, un savoir-faire artisanal</h2>
-        <p>Depuis plus de 25 ans, Julie et José conjuguent leur amour de la cuisine pour créer des expériences gastronomiques uniques. Basés à Bordeaux, ils rayonnent sur toute la région.</p>
-        <p>Chaque menu est pensé avec soin : produits locaux, recettes maison, et attention particulière aux régimes alimentaires et aux allergènes.</p>
-        <a href="menus.html" class="btn-primary" style="margin-top:.5rem;">Voir nos menus ↗</a>
-      </div>
-      <div class="team-cards">
-        <div class="team-card">
-          <div class="team-avatar avatar-julie">👩‍🍳</div>
-          <div class="team-info"><h3>Julie</h3><p>Chef cuisinière & fondatrice</p><span class="team-tag">🍽️ Spécialiste des menus gastronomiques</span></div>
-        </div>
-        <div class="team-card">
-          <div class="team-avatar avatar-jose">👨‍💼</div>
-          <div class="team-info"><h3>José</h3><p>Co-fondateur & responsable logistique</p><span class="team-tag">🚚 Expert livraison & organisation</span></div>
-        </div>
-        <div class="team-card" style="background: linear-gradient(135deg, rgba(196,87,26,0.05), rgba(212,168,75,0.08));">
-          <div style="font-size:2rem;">🌱</div>
-          <div class="team-info"><h3>Notre engagement</h3><p>Produits locaux, allergènes respectés, menus végétariens & vegan disponibles</p></div>
-        </div>
-      </div>
+<section class="section" id="about">
+  <div class="about-grid">
+
+    <div class="about-text">
+      <div class="section-label">Notre histoire</div>
+      <h2>Une passion familiale, un savoir-faire artisanal</h2>
+      <p>Depuis plus de 25 ans, Julie et José conjuguent leur amour 
+      de la cuisine pour créer des expériences gastronomiques uniques. Basés à Bordeaux, ils rayonnent sur toute la région.<br>
+        Chaque menu est pensé avec soin : produits locaux, recettes maison, et attention particulière aux régimes alimentaires et aux allergènes.</p>
     </div>
-  </section>
+
+    <img src="images/img1.jpg" alt="Julie et José" class="about-img"/>
+
+  </div>
+</section>
 
   <section class="avis-section" id="avis">
     <div class="section-label">Ce qu'ils disent</div>
-    <h2 class="section-title">Avis de nos clients</h2>
+    <h2 >Avis de nos clients</h2>
     <div class="avis-grid">
       <div class="avis-card">
         <div class="stars">★★★★★</div>
         <p class="avis-text">"Un repas de Noël absolument inoubliable. Julie a su s'adapter à nos contraintes alimentaires avec beaucoup de professionnalisme."</p>
-        <div class="avis-author"><div class="avis-avatar">M</div><div><div class="avis-name">Marie-Claire D.</div><div class="avis-event">Réveillon de Noël • 12 personnes</div></div></div>
-      </div>
-      <div class="avis-card">
+        <div class="avis-author"><div class="avis-avatar">M
+
+       </div>
+        <div><div class="avis-name">Marie-Claire D.
+
+       </div><div class="avis-event">Réveillon de Noël • 12 personnes
+
+        </div>
+       </div>
+        </div>
+       </div>
+       <div class="avis-card">
         <div class="stars">★★★★★</div>
         <p class="avis-text">"Livraison ponctuelle, plats chauds et délicieux. José est très sympathique et à l'écoute. On les recommandera sans hésiter !"</p>
         <div class="avis-author"><div class="avis-avatar">T</div><div><div class="avis-name">Thomas B.</div><div class="avis-event">Séminaire d'entreprise • 30 personnes</div></div></div>

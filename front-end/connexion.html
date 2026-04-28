@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+  
+      <img src="images/Vite &.png" alt="" class="logo">
+    
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Accueil</a></li>
+      <li><a href="menus.html">Nos Menus</a></li>
+      <li><a href="#about">À Propos</a></li>
+      <li><a href="#avis">Avis</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="connexion.html" class="nav-cta">Se connecter</a></li>
+    <li><a href="espace-utilisateur.html" class="nav-cta" style="background:transparent; border:1px solid var(--terracotta); color:var(--terracotta);">👤 Espace personnel</a></li>
+    </ul>
+  </nav>
+<h2>Connexion</h2>
+
+<input type="email" id="email" placeholder="Email"><br><br>
+<input type="password" id="password" placeholder="Mot de passe"><br><br>
+
+<button onclick="login()">Se connecter</button>
+
+<p id="msg"></p>
+
+
+
+
+  <footer id="contact">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo"><span class="logo-vite">Vite</span><span class="logo-et">&amp;</span><span class="logo-gour">Gourmand</span></div>
+          <span class="footer-logo-sub">Traiteur • Bordeaux</span>
+          <p class="footer-desc">Traiteur bordelais depuis 25 ans. Nous livrons vos événements avec passion et savoir-faire, pour des moments inoubliables à table.</p>
+          <div class="footer-contact-item"><span>📍</span><span>Bordeaux, France</span></div>
+          <div class="footer-contact-item"><span>📧</span><span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1e7d71706a7f7d6a5e68776a7b79716b6c737f707a30786c">vite&gourmand@gmail.com</a></span></div>
+        </div>
+       
+        <div>
+          <div class="footer-title">Horaires d'ouverture</div>
+          <div class="footer-horaires">
+            <div class="horaire-row"><span class="horaire-day">Lundi</span><span class="horaire-time">9h – 18h</span></div>
+            <div class="horaire-row"><span class="horaire-day">Mardi</span><span class="horaire-time">9h – 18h</span></div>
+            <div class="horaire-row"><span class="horaire-day">Mercredi</span><span class="horaire-time">9h – 18h</span></div>
+            <div class="horaire-row"><span class="horaire-day">Jeudi</span><span class="horaire-time">9h – 18h</span></div>
+            <div class="horaire-row"><span class="horaire-day">Vendredi</span><span class="horaire-time">9h – 17h</span></div>
+            <div class="horaire-row"><span class="horaire-day">Samedi</span><span class="horaire-time">10h – 15h</span></div>
+            <div class="horaire-row fermé"><span class="horaire-day">Dimanche</span><span class="horaire-time">Fermé</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Vite & Gourmand. Tous droits réservés.</span>
+      <div class="footer-legal">
+        <a href="#">Mentions légales</a>
+        <a href="#">CGV</a>
+        <a href="#">RGPD</a>
+      </div>
+    </div>
+  </footer> 
+  <script>
+  function login() {
+
+  let email = document.getElementById("email").value;
+  let password = document.getElementById("password").value;
+
+  fetch("login.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      email: email,
+      password: password
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+
+    document.getElementById("msg").innerText = data.message;
+
+    if (data.success) {
+      window.location.href = "espace-utilisateur.html";
+    }
+
+  })
+  .catch(err => console.error(err));
+}
+</script>
+  <script src="script.js"></script>
+</body>
+</html>
